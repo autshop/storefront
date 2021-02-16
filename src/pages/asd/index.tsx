@@ -1,5 +1,9 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 
-const asd: FC = () => <p>Hey</p>
+const asd: FC = () => {
+    useEffect(() => {
+       }, []);
+    return (<p>Hey</p>);
+}
 
 export default asd;
