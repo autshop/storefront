@@ -15,8 +15,13 @@
     "downlevelIteration": true,
     "baseUrl": ".",
     "jsx": "preserve",
-    "paths": { "~lib/*": ["src/lib/*"], "~components/*": ["src/components/*"], "~assets/*": ["src/assets/*"] }
+    "paths": {
+      "~lib/*": ["src/lib/*"],
+      "~components/*": ["src/components/*"],
+      "~api/*": ["src/api/*"],
+      "~assets/*": ["src/assets/*"]
+    }
   },
-  "exclude": ["node_modules", ".next"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules", ".next"]
 }

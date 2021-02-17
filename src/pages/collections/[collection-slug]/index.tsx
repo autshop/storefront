@@ -1,7 +1,7 @@
-import {FC} from "react";
+import { FC } from 'react';
 
 const Collections: FC = () => {
-    return (<p>Collections</p>);
-}
+    return <p>Collections</p>;
+};
 
 export default Collections;

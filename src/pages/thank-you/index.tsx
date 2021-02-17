@@ -1,7 +1,7 @@
-import {FC} from "react";
+import { FC } from 'react';
 
 const ThankYou: FC = () => {
-    return (<p>ThankYou</p>);
-}
+    return <p>ThankYou</p>;
+};
 
 export default ThankYou;
