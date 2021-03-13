@@ -1,10 +1,14 @@
 import { FC } from "react";
 import VariantList from "~components/collections/VariantList";
 
-const Collections: FC = () => {
+type Props = {
+    data: any;
+};
+
+const Collections: FC<Props> = ({ data }) => {
     return (
         <section>
-            <h1>Collection #1</h1>
+            <h1>{data.id}</h1>
             <p>
                 Lorem ipsum dolor sit amet,  consectetur adipiscing elit. Nam vel fringilla arcu. Aliquam  rutrum
                 rhoncus augue.{" "}
@@ -13,5 +17,11 @@ const Collections: FC = () => {
         </section>
     );
 };
+
+export async function getServerSideProps(context) {
+    return {
+        props: { data: null }
+    };
+}
 
 export default Collections;
