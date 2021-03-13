@@ -2,27 +2,29 @@ export type VariantStatus = "active" | "disabled" | "active_on";
 
 export type VariantSize = {
     id: number;
-    name: string;
-    quantity: string;
-    hasStock: boolean;
-    position: number;
+    measurement: number;
+    quantity: number;
 };
 
 export type Variant = {
     id: number;
     name: string;
-    description: string;
-    code: string;
-    status: VariantStatus;
-    statusDate: string;
-    sizes: VariantSize[];
-    price: number;
-    currencyCode: string;
     sku: string;
-    barcode: string;
+    imageSrc: string[];
+    sizes: VariantSize[];
 };
 
 export type Product = {
     id: number;
+    name: string;
     variants: Variant[];
 };
+
+export type Collection = {
+    id: number;
+    name: string;
+    description: string;
+    variants: Variant[];
+}
+
+
