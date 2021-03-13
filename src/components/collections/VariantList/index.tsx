@@ -9,7 +9,6 @@ type Props = {
 
 const VariantList: FC<Props> = ({ collectionId }) => (
     <div className={css["VariantList"]}>
-        <span>Collection {collectionId}</span>
         <div className={css["container"]}>
             <div className={css["container-item"]}>
                 <VariantListItem variantId={1} />

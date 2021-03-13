@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { AppBar, Button, makeStyles, Toolbar, Typography } from "@material-ui/core";
+import Link from "next/link";
 
 const useStyles = makeStyles({
     root: {
@@ -28,7 +29,9 @@ const Header: FC = () => {
         <AppBar position="static" className={classes.root}>
             <Toolbar className={classes.menu}>
                 <Typography>Example Store Logo</Typography>
-                <Typography className={classes.collectionLink}>Collections #1</Typography>
+                <Link href={`/collections/[collection-id]/`} as={`/collections/${1}`} passHref>
+                    <Typography className={classes.collectionLink}>Collections #1</Typography>
+                </Link>
             </Toolbar>
         </AppBar>
     );
