@@ -12,19 +12,5 @@ export type Variant = {
     sku: string;
     imageSrc: string[];
     sizes: VariantSize[];
+    status: VariantStatus;
 };
-
-export type Product = {
-    id: number;
-    name: string;
-    variants: Variant[];
-};
-
-export type Collection = {
-    id: number;
-    name: string;
-    description: string;
-    variants: Variant[];
-}
-
-

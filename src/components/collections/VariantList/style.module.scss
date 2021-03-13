@@ -1,0 +1,21 @@
+.VariantList {
+
+  .container {
+    width: 80vw;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+
+    &-item {
+      flex: 0 0 312px;
+      margin-bottom: 72px;
+
+      &:nth-child(3n+2) {
+        $side-margin: calc((80vw - 3 * 312px) / 2);
+        margin: 0 $side-margin 72px $side-margin;
+      }
+    }
+  }
+}
