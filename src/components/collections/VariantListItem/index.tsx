@@ -12,7 +12,7 @@ import {
     Select,
     Typography
 } from "@material-ui/core";
-import { noop, map, get } from "lodash";
+import { map, get } from "lodash";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addSizeAction } from "~lib/cart/actions";
