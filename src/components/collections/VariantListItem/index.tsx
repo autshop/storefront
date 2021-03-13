@@ -1,6 +1,5 @@
 import { FC, memo, useState } from "react";
 import {
-    Button,
     Card,
     CardActionArea,
     CardActions,
@@ -16,6 +15,7 @@ import { map, get } from "lodash";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addSizeAction } from "~lib/cart/actions";
+import Button from "~components/common/Button";
 
 type Props = {
     variantId: number;
