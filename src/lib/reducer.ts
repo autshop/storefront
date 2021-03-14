@@ -1,10 +1,15 @@
-import {combineReducers} from "redux";
-import variantReducer  from "~lib/variant/reducer";
-import {StoreState} from "~lib/state";
+import { combineReducers } from "redux";
+import variantReducer from "~lib/variant/reducer";
+import cartReducer from "~lib/cart/reducer";
+import collectionReducer from "~lib/collections/reducer";
+import uiReducer from "~lib/ui/reducer";
+import { StoreState } from "~lib/state";
 
 const combinedReducers = combineReducers<StoreState>({
-    variant: variantReducer
-})
-
+    variant: variantReducer,
+    cart: cartReducer,
+    collections: collectionReducer,
+    ui: uiReducer
+});
 
 export default combinedReducers;

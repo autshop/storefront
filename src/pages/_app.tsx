@@ -1,9 +1,26 @@
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import store from "~lib/store";
-import { ReactElement } from "react";
+import { ReactElement, useEffect } from "react";
+import Head from "next/head";
+import Header from "~components/layout/Header";
+import { loadCollectionsAction } from "~lib/collections/actions";
+
+import "~assets/styles/global.scss";
 
 export const MyApp = ({ Component, pageProps }): ReactElement => {
-    return <Component {...pageProps} />;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(loadCollectionsAction());
+    }, []);
+    return (
+        <>
+            <Head>
+                <title>Hey</title>
+            </Head>
+            <Header />
+            <Component {...pageProps} />
+        </>
+    );
 };
 
 const WrappedApp = (props): ReactElement => (

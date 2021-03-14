@@ -1,36 +1,36 @@
 import { Reducer } from "redux";
 import { produce } from "immer";
 
-import { Variant } from "~lib/variant/types";
-import { VariantActionConstants } from "~lib/variant/actions";
+import { CollectionActionConstants } from "~lib/collections/actions";
+import { Collection } from "~lib/collections/types";
 
-export type VariantsState = {
-    variants: Variant[];
+export type CollectionsState = {
+    collections: Collection[];
     isLoading: boolean;
     error: string;
 };
 
-export const initialState: VariantsState = {
-    variants: [],
+export const initialState: CollectionsState = {
+    collections: [],
     isLoading: false,
     error: ""
 };
 
-const reducer: Reducer<VariantsState> = (state = initialState, action): VariantsState => {
+const reducer: Reducer<CollectionsState> = (state = initialState, action): CollectionsState => {
     switch (action.type) {
-        case VariantActionConstants.LOAD_VARIANTS: {
+        case CollectionActionConstants.LOAD_COLLECTIONS: {
             return produce(state, draft => {
                 draft.isLoading = true;
             });
         }
-        case VariantActionConstants.LOAD_VARIANTS_SUCCESS: {
+        case CollectionActionConstants.LOAD_COLLECTIONS_SUCCESS: {
             return produce(state, draft => {
-                const { variants } = action.payload;
+                const { collections } = action.payload;
                 draft.isLoading = false;
-                draft.variants = variants;
+                draft.collections = collections;
             });
         }
-        case VariantActionConstants.LOAD_VARIANTS_ERROR: {
+        case CollectionActionConstants.LOAD_COLLECTIONS_ERROR: {
             return produce(state, draft => {
                 const { error } = action.payload;
                 draft.isLoading = false;

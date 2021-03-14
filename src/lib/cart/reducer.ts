@@ -1,36 +1,36 @@
 import { Reducer } from "redux";
 import { produce } from "immer";
 
-import { Variant } from "~lib/variant/types";
-import { VariantActionConstants } from "~lib/variant/actions";
+import { CartActionConstants } from "~lib/cart/actions";
+import { VariantSize } from "~lib/variant/types";
 
-export type VariantsState = {
-    variants: Variant[];
+export type CartState = {
+    variantSizes: VariantSize[];
     isLoading: boolean;
     error: string;
 };
 
-export const initialState: VariantsState = {
-    variants: [],
+export const initialState: CartState = {
+    variantSizes: [],
     isLoading: false,
     error: ""
 };
 
-const reducer: Reducer<VariantsState> = (state = initialState, action): VariantsState => {
+const reducer: Reducer<CartState> = (state = initialState, action): CartState => {
     switch (action.type) {
-        case VariantActionConstants.LOAD_VARIANTS: {
+        case CartActionConstants.ADD_SIZE: {
             return produce(state, draft => {
                 draft.isLoading = true;
             });
         }
-        case VariantActionConstants.LOAD_VARIANTS_SUCCESS: {
+        case CartActionConstants.ADD_SIZE_SUCCESS: {
             return produce(state, draft => {
-                const { variants } = action.payload;
+                const { variantSizes } = action.payload;
                 draft.isLoading = false;
-                draft.variants = variants;
+                draft.variantSizes = variantSizes;
             });
         }
-        case VariantActionConstants.LOAD_VARIANTS_ERROR: {
+        case CartActionConstants.ADD_SIZE_ERROR: {
             return produce(state, draft => {
                 const { error } = action.payload;
                 draft.isLoading = false;
