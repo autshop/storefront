@@ -16,10 +16,12 @@ const useStyles = makeStyles({
     collectionLink: {
         "padding-left": "42px",
         "font-size": "14px",
-        display: "block"
+        display: "block",
+        cursor: "pointer"
     },
     cartLink: {
-        "text-align": "right"
+        "text-align": "right",
+        cursor: "pointer"
     }
 });
 

@@ -3,17 +3,36 @@ import VariantList from "~components/collections/VariantList";
 import { fetchCollections } from "~lib/collections/mock";
 import { Collection } from "~lib/collections/types";
 import { find } from "lodash";
+import { makeStyles, Typography } from "@material-ui/core";
 
+const useStyles = makeStyles({
+    collectionName: {
+        "font-size": "26px",
+        "text-align": "center",
+        padding: "38px 0"
+    },
+    collectionDescription: {
+        "font-size": "20px",
+        "text-align": "center",
+        "padding-bottom": "72px"
+    }
+});
 type Props = {
     collectionProps: any;
 };
 
 const Collections: FC<Props> = ({ collectionProps }) => {
+    const classes = useStyles();
+
     if (!collectionProps) return <div>TODO 404</div>;
     return (
         <section>
-            <h1>{collectionProps.id}</h1>
-            <p>{collectionProps.name}</p>
+            <Typography variant="body1" className={classes.collectionName}>
+                {collectionProps.name}
+            </Typography>
+            <Typography variant="body1" className={classes.collectionDescription}>
+                {collectionProps.description}
+            </Typography>
             <VariantList collectionId={2} />
         </section>
     );
