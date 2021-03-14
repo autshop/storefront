@@ -5,7 +5,7 @@ import Head from "next/head";
 import Header from "~components/layout/Header";
 import { loadCollectionsAction } from "~lib/collections/actions";
 
-import "../assets/styles.scss";
+import "~assets/styles/global.scss";
 
 export const MyApp = ({ Component, pageProps }): ReactElement => {
     const dispatch = useDispatch();

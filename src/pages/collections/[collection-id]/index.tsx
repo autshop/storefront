@@ -2,7 +2,6 @@ import { FC } from "react";
 import VariantList from "~components/collections/VariantList";
 import { fetchCollections } from "~lib/collections/mock";
 import { Collection } from "~lib/collections/types";
-import { find } from "lodash";
 import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -24,12 +23,12 @@ type Props = {
 const Collections: FC<Props> = ({ collectionProps }) => {
     const classes = useStyles();
 
-    if (!collectionProps) return <div>TODO 404</div>;
     return (
         <section>
             <Typography variant="body1" className={classes.collectionName}>
                 {collectionProps.name}
             </Typography>
+
             <Typography variant="body1" className={classes.collectionDescription}>
                 {collectionProps.description}
             </Typography>
@@ -49,12 +48,6 @@ export const getServerSideProps = async context => {
     const collections: Collection[] = (await fetchCollections()) as Collection[];
 
     const collection = collections.find(collection => collection.id == collectionId);
-
-    if (!collection) {
-        return {
-            props: { collectionProps: null }
-        };
-    }
 
     return {
         props: { collectionProps: collection }
