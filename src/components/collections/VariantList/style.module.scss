@@ -17,6 +17,7 @@
     &-item {
       flex: 0 0 312px;
       margin-bottom: 72px;
+      max-width: 312px;
 
 
       @include mobile() {

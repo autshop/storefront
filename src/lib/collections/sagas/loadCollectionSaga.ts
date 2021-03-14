@@ -6,7 +6,7 @@ import {
     loadCollectionsErrorAction,
     loadCollectionsSuccessAction
 } from "~lib/collections/actions";
-import { fetchCollections } from "~lib/collections/mock";
+import { fetchCollections } from "~mock/index";
 
 function* loadCollectionsSaga() {
     yield put(loadCollectionsAction());

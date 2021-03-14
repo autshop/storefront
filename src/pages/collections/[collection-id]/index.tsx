@@ -1,6 +1,6 @@
 import { FC } from "react";
 import VariantList from "~components/collections/VariantList";
-import { fetchCollections } from "~lib/collections/mock";
+import { fetchCollections } from "~mock/index";
 import { Collection } from "~lib/collections/types";
 import { makeStyles, Typography } from "@material-ui/core";
 
@@ -32,7 +32,7 @@ const Collections: FC<Props> = ({ collectionProps }) => {
             <Typography variant="body1" className={classes.collectionDescription}>
                 {collectionProps.description}
             </Typography>
-            <VariantList collectionId={2} />
+            <VariantList collectionId={collectionProps.id} />
         </section>
     );
 };

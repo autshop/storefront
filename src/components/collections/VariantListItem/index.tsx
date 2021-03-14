@@ -13,9 +13,11 @@ import {
 } from "@material-ui/core";
 import { map, get } from "lodash";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addSizeAction } from "~lib/cart/actions";
 import Button from "~components/common/Button";
+import { getVariantById } from "~lib/variant/selectors";
+import { StoreState } from "~lib/state";
 
 type Props = {
     variantId: number;
@@ -50,6 +52,8 @@ const tempSizes = ["OS", "X", "XL"];
 const VariantListItem: FC<Props> = ({ variantId }) => {
     const [selectedSize, setSelectedSize] = useState<string | null>(tempSizes[0]);
 
+    const variant = useSelector((state: StoreState) => getVariantById(state, variantId));
+
     const dispatch = useDispatch();
 
     const handleSizeChange = size => setSelectedSize(get(size, "target.value", null));
@@ -58,8 +62,10 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
         const size = 1;
         dispatch(addSizeAction(size));
     };
-
     const classes = useStyles();
+
+    if (!variant) return null;
+
     return (
         <Card className={classes.root}>
             <Link href={`/variants/${variantId}`} passHref>
@@ -73,11 +79,10 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
                     />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="h2">
-                            Lizard
+                            {variant.name}
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">
-                            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across
-                            all continents except Antarctica
+                            {variant.description}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
