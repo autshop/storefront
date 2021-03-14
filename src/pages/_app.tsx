@@ -2,7 +2,7 @@ import { Provider, useDispatch } from "react-redux";
 import store from "~lib/store";
 import { ReactElement, useEffect } from "react";
 import Head from "next/head";
-import Header from "~components/layout/header";
+import Header from "~components/layout/Header";
 import { loadCollectionsAction } from "~lib/collections/actions";
 
 import "../assets/styles.scss";
