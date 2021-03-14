@@ -1,8 +1,12 @@
-import { FC } from "react";
+import { FC, useEffect, useMemo } from "react";
+import { get } from "lodash";
 import VariantList from "~components/collections/VariantList";
 import { fetchCollections } from "~mock/index";
 import { Collection } from "~lib/collections/types";
 import { makeStyles, Typography } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { getCollectionById } from "~lib/collections/selectors";
+import { StoreState } from "~lib/state";
 
 const useStyles = makeStyles({
     collectionName: {
@@ -23,6 +27,12 @@ type Props = {
 const Collections: FC<Props> = ({ collectionProps }) => {
     const classes = useStyles();
 
+    const collection = useSelector((state: StoreState) => getCollectionById(state, collectionProps.id));
+
+    const variantIds = useMemo(() => {
+        return get(collection, "variantIds", []);
+    }, [collection]);
+
     return (
         <section>
             <Typography variant="body1" className={classes.collectionName}>
@@ -32,7 +42,7 @@ const Collections: FC<Props> = ({ collectionProps }) => {
             <Typography variant="body1" className={classes.collectionDescription}>
                 {collectionProps.description}
             </Typography>
-            <VariantList collectionId={collectionProps.id} />
+            <VariantList variantIds={variantIds} />
         </section>
     );
 };

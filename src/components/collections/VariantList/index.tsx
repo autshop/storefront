@@ -18,12 +18,10 @@ const scrollProperties: ScrollProperties = {
 };
 
 type Props = {
-    collectionId: number;
+    variantIds: number[];
 };
 
-const VariantList: FC<Props> = ({ collectionId }) => {
-    const variantIds = useSelector((state: StoreState) => getVariantsByCollectionId(state, collectionId));
-
+const VariantList: FC<Props> = ({ variantIds }) => {
     const router = useRouter();
 
     const saveScrollPosition = () => (scrollProperties.scrollY = window.scrollY);

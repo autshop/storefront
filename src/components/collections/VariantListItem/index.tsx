@@ -1,4 +1,4 @@
-import { FC, memo, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 import {
     Card,
     CardActionArea,
@@ -11,7 +11,7 @@ import {
     Select,
     Typography
 } from "@material-ui/core";
-import { map, get } from "lodash";
+import { map, get, find } from "lodash";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { addSizeAction } from "~lib/cart/actions";
@@ -46,23 +46,24 @@ const useStyles = makeStyles({
     }
 });
 
-//TODO
-const tempSizes = ["OS", "X", "XL"];
-
 const VariantListItem: FC<Props> = ({ variantId }) => {
-    const [selectedSize, setSelectedSize] = useState<string | null>(tempSizes[0]);
+    const [selectedSizeId, setSelectedSizeId] = useState<number>(null);
 
     const variant = useSelector((state: StoreState) => getVariantById(state, variantId));
 
     const dispatch = useDispatch();
+    const classes = useStyles();
 
-    const handleSizeChange = size => setSelectedSize(get(size, "target.value", null));
+    useEffect(() => {
+        const firstAvailableSize = find(get(variant, "sizes", []), ({ quantity }) => quantity > 0);
+        if (firstAvailableSize) setSelectedSizeId(firstAvailableSize.id);
+    }, [variantId, variant]);
 
+    const handleSizeChange = size => setSelectedSizeId(get(size, "target.value", null));
     const handleAddToBagClick = () => {
         const size = 1;
         dispatch(addSizeAction(size));
     };
-    const classes = useStyles();
 
     if (!variant) return null;
 
@@ -74,7 +75,7 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
                         className={classes.image}
                         component="img"
                         alt="Contemplative Reptile"
-                        image="https://cdn.shopify.com/s/files/1/0159/3150/6742/products/i-am-an-example-to-others-a-bad-example-mens-premium-t-shirt-t-shirt-graphic-gear-black-s-648295.jpg?v=1572880068"
+                        image={variant.imageSrcList[0]}
                         title="Contemplative Reptile"
                     />
                     <CardContent>
@@ -93,11 +94,13 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={selectedSize}
+                        value={selectedSizeId}
                         onChange={handleSizeChange}
                     >
-                        {map(tempSizes, size => (
-                            <MenuItem value={size}>{size}</MenuItem>
+                        {map(variant.sizes, ({ measurement, id, quantity }) => (
+                            <MenuItem value={id} disabled={quantity <= 0}>
+                                {measurement}
+                            </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
