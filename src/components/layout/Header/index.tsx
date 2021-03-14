@@ -13,6 +13,13 @@ import { getCollections } from "~lib/collections/selectors";
 
 const useStyles = makeStyles({
     root: {
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        zIndex: 10
+    },
+    appbar: {
         height: "50px",
         background: "white",
         color: "black",
@@ -65,8 +72,8 @@ const Header: FC = () => {
     };
 
     return (
-        <div>
-            <AppBar position="static" className={classes.root}>
+        <div className={classes.root}>
+            <AppBar position="static" className={classes.appbar}>
                 <Toolbar className={classes.rootMenu}>
                     <div className={classes.leftMenu}>
                         {isMobileWindow ? (

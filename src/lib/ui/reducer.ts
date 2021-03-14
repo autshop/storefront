@@ -9,7 +9,7 @@ export type UiState = {
 };
 
 export const initialState: UiState = {
-    isCartShown: false,
+    isCartShown: true,
     isMobileWindow: false
 };
 
