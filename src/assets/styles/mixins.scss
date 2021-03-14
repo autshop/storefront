@@ -1,4 +1,5 @@
 $screen-mobile-max: 900px;
+$screen-tablet-max: 1200px;
 
 @mixin mobile {
   @media (max-width: #{$screen-mobile-max}) {
@@ -7,8 +8,15 @@ $screen-mobile-max: 900px;
 }
 
 
+@mixin tablet {
+  @media (min-width: #{$screen-mobile-max + 1}) and (max-width: #{$screen-tablet-max}){
+    @content;
+  }
+}
+
+
 @mixin desktop {
-  @media (min-width: calc(#{$screen-mobile-max} + 1)) {
+  @media (min-width: #{$screen-tablet-max + 1}) {
     @content;
   }
 }

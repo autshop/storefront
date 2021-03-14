@@ -15,6 +15,9 @@ const windowResizeChannel = () => {
 };
 
 export function* windowWidthChannelSaga() {
+    //pre-render
+    if (!window) return;
+
     const channel = yield call(windowResizeChannel);
     while (true) {
         const width = yield take(channel);
