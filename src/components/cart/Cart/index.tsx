@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 import { getIsCartShown } from "~lib/ui/selectors";
 import Button from "~components/common/Button";
 import CartContent from "~components/cart/CartContent";
+import { keys } from "lodash";
+import { getCart } from "~lib/cart/selectors";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,8 +29,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Cart: FC = () => {
-    const isCartShown = useSelector(getIsCartShown);
     const classes = useStyles();
+
+    const isCartShown = useSelector(getIsCartShown);
+    const cart = useSelector(getCart);
+
+    if ((keys(cart) || []).length <= 0) return null;
 
     if (!isCartShown) return null;
 

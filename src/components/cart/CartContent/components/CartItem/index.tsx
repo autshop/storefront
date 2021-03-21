@@ -1,7 +1,10 @@
 import { FC } from "react";
-import { Card, CardContent, CardMedia, IconButton, makeStyles, Paper, Typography } from "@material-ui/core";
+import { get } from "lodash";
+import { Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import { getIsCartShown } from "~lib/ui/selectors";
+import { StoreState } from "~lib/state";
+import { getCartItemById } from "~lib/cart/selectors";
+import { getVariantById } from "~lib/variant/selectors";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -29,8 +32,19 @@ const useStyles = makeStyles(() => ({
     }
 }));
 
-const CartItem: FC = () => {
+type Props = {
+    cartItemId: number;
+};
+
+const CartItem: FC<Props> = ({ cartItemId }) => {
     const classes = useStyles();
+
+    const cartItem = useSelector((state: StoreState) => getCartItemById(state, cartItemId));
+    const variant = useSelector((state: StoreState) => getVariantById(state, cartItem.variantId));
+
+    const size = get(cartItem, "size.measurement", null);
+
+    if (!cartItem || !variant) return null;
 
     return (
         <Card className={classes.root}>
@@ -42,10 +56,10 @@ const CartItem: FC = () => {
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography variant="body1" className={classes.text}>
-                        Fancy Dress
+                        {variant.name}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary" className={classes.text}>
-                        Size <b>S</b>
+                        Size <b>{size}</b>
                     </Typography>
                 </CardContent>
             </div>

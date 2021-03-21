@@ -1,5 +1,4 @@
-import { VariantSize } from "~lib/variant/types";
-import { Collection } from "~lib/collections/types";
+import { Cart } from "~lib/cart/types";
 
 export enum CartActionConstants {
     LOAD_CART = "CART/LOAD_CART",
@@ -14,8 +13,7 @@ export const loadCartAction = () => ({
     type: CartActionConstants.LOAD_CART
 });
 
-//TODO TYPE
-export const loadCartActionSuccessAction = (cart: any) => ({
+export const loadCartActionSuccessAction = (cart: Cart) => ({
     type: CartActionConstants.LOAD_CART_SUCCESS,
     payload: {
         cart
@@ -34,9 +32,9 @@ export const addSizeAction = (sizeId: number) => ({
     payload: { sizeId }
 });
 
-export const addSizeSuccessAction = (variantSizes: VariantSize[]) => ({
+export const addSizeSuccessAction = (cart: Cart) => ({
     type: CartActionConstants.ADD_SIZE_SUCCESS,
-    payload: { variantSizes }
+    payload: { cart }
 });
 
 export const addSizeErrorAction = (error: string) => ({

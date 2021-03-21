@@ -28,7 +28,6 @@ export const loadCheckoutAction = (token: string) => ({
     }
 });
 
-//TODO TYPE
 export const loadCheckoutSuccessAction = (order: Order) => ({
     type: CheckoutActionConstants.LOAD_CHECKOUT_SUCCESS,
     payload: {
@@ -50,7 +49,6 @@ export const setCheckoutContact = (contactData: CheckoutContactStepTypes) => ({
     }
 });
 
-//TODO TYPE
 export const setCheckoutContactSuccess = (order: Order) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_CONTACT_SUCCESS,
     payload: {
@@ -72,7 +70,6 @@ export const setCheckoutAddress = (addressData: CheckoutAddressStepTypes) => ({
     }
 });
 
-//TODO TYPE
 export const setCheckoutAddressSuccess = (order: Order) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_ADDRESS_SUCCESS,
     payload: {
@@ -94,7 +91,6 @@ export const setCheckoutShippingMethod = (shippingMethodId: number) => ({
     }
 });
 
-//TODO TYPE
 export const setCheckoutShippingMethodSuccess = (order: Order) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_SHIPPING_METHOD_SUCCESS,
     payload: {

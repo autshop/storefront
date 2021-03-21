@@ -1,6 +1,6 @@
 import { StoreState } from "~lib/state";
 import { get } from "lodash";
-import { CheckoutStep, CheckoutStepKey } from "~lib/checkout/types";
+import { CheckoutStepKey } from "~lib/checkout/types";
 
 const getState = (state: StoreState) => state.checkout;
 
