@@ -9,8 +9,9 @@ import { CheckoutStepKey } from "~lib/checkout/types";
 import { getCheckoutStep } from "~lib/checkout/selectors";
 import { useSelector } from "react-redux";
 import { StoreState } from "~lib/state";
+import Separator from "~components/common/Separator";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     input: {
         width: "100%",
         "padding-bottom": "14px"
@@ -23,7 +24,11 @@ const useStyles = makeStyles(() => ({
         background: "#FFB775"
     },
     formWrapper: {
-        position: "relative"
+        position: "relative",
+        width: "60%",
+        [theme.breakpoints.down("lg")]: {
+            width: "100%"
+        }
     },
     progressWrapper: {
         position: "absolute",
@@ -72,6 +77,7 @@ const CheckoutStep: FC<Props> = ({ title, children, checkoutStepKey }) => {
                 ) : null}
             </div>
             <Typography className={classes.errorMessage}>{checkoutStep?.error}</Typography>
+            <Separator />
         </>
     );
 };

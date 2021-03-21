@@ -1,28 +1,30 @@
 import { FC } from "react";
 import Link from "next/link";
-
 import { makeStyles, Paper } from "@material-ui/core";
 import { useSelector } from "react-redux";
+//
 import { getIsCartShown } from "~lib/ui/selectors";
-import CartItem from "~components/cart/CartContent/components/CartItem";
 import Button from "~components/common/Button";
 import CartContent from "~components/cart/CartContent";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
-        width: 437,
+        width: "100%",
         background: "white",
         position: "absolute",
         right: 0,
         top: 50,
-        textAlign: "right"
+        textAlign: "right",
+        [theme.breakpoints.up("sm")]: {
+            width: 437
+        }
     },
     button: {
         background: "#FFB775",
         color: "black",
         width: "134px"
     }
-});
+}));
 
 const Cart: FC = () => {
     const isCartShown = useSelector(getIsCartShown);

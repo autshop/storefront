@@ -7,6 +7,7 @@ import { loadCollectionsAction } from "~lib/collections/actions";
 
 import "~assets/styles/global.scss";
 import { loadVariantsAction } from "~lib/variant/actions";
+import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
 
 export const MyApp = ({ Component, pageProps }): ReactElement => {
     const dispatch = useDispatch();
@@ -26,10 +27,26 @@ export const MyApp = ({ Component, pageProps }): ReactElement => {
     );
 };
 
-const WrappedApp = (props): ReactElement => (
-    <Provider store={store}>
-        <MyApp {...props} />
-    </Provider>
-);
+const WrappedApp = (props): ReactElement => {
+    const theme = createMuiTheme({
+        breakpoints: {
+            values: {
+                xs: 0,
+                sm: 900,
+                md: 1024,
+                lg: 1280,
+                xl: 1920
+            }
+        }
+    });
+
+    return (
+        <MuiThemeProvider theme={theme}>
+            <Provider store={store}>
+                <MyApp {...props} />
+            </Provider>
+        </MuiThemeProvider>
+    );
+};
 
 export default WrappedApp;

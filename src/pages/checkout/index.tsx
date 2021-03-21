@@ -9,13 +9,20 @@ import { showCartAction } from "~lib/ui/actions";
 import CheckoutStepWrapper from "~components/checkout/CheckoutStepWrapper";
 import { CheckoutStepKey } from "~lib/checkout/types";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
     root: {
         display: "grid",
-        gridTemplateColumns: "1fr 308px 1fr",
+        gridTemplateColumns: "100%",
         width: "80%",
         margin: "0 auto",
-        paddingTop: "80px"
+        paddingTop: "80px",
+
+        [theme.breakpoints.up("sm")]: {
+            gridTemplateColumns: "1fr 154px 1fr"
+        },
+        [theme.breakpoints.up("lg")]: {
+            gridTemplateColumns: "1fr 308px 1fr"
+        }
     },
     input: {
         width: "100%",
