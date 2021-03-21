@@ -37,6 +37,9 @@
       ],
       "~mock/*": [
         "src/mock/*"
+      ],
+      "~utils/*": [
+        "src/utils/*"
       ]
     },
     "resolveJsonModule": true

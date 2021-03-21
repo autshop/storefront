@@ -8,7 +8,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 //
 import { showCartAction } from "~lib/ui/actions";
 import { getIsCartShown, getIsMobileWindow } from "~lib/ui/selectors";
-import Cart from "~components/common/Cart";
+import Cart from "~components/cart/Cart";
 import { getCollections } from "~lib/collections/selectors";
 
 const useStyles = makeStyles({

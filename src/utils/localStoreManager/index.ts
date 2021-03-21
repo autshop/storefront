@@ -1,5 +1,6 @@
 export enum LocalStorageKeys {
-    CART = "CART"
+    CART = "CART",
+    ORDER_TOKEN = "ORDER_TOKEN"
 }
 
 const getLocalStorage = () => {

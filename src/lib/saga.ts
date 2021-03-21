@@ -3,9 +3,10 @@ import variantSaga from "~lib/variant/saga";
 import cartSaga from "~lib/cart/saga";
 import collectionSaga from "~lib/collections/saga";
 import uiSaga from "~lib/ui/saga";
+import checkoutSaga from "~lib/checkout/saga";
 
 function* rootSaga() {
-    yield all([variantSaga(), cartSaga(), collectionSaga(), uiSaga()]);
+    yield all([variantSaga(), cartSaga(), collectionSaga(), uiSaga(), checkoutSaga()]);
 }
 
 export default rootSaga;

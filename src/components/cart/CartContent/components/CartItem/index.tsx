@@ -30,10 +30,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const CartItem: FC = () => {
-    const isCartShown = useSelector(getIsCartShown);
     const classes = useStyles();
-
-    if (!isCartShown) return null;
 
     return (
         <Card className={classes.root}>
