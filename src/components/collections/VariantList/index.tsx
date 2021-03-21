@@ -1,13 +1,28 @@
 import { FC, memo, useEffect } from "react";
-import { useSelector } from "react-redux";
+import classnames from "classnames";
 import { map } from "lodash";
+import { useRouter } from "next/router";
 //
 import VariantListItem from "~components/collections/VariantListItem";
-import { getVariantsByCollectionId } from "~lib/collections/selectors";
-import { StoreState } from "~lib/state";
 //
 import css from "./style.module.scss";
-import { useRouter } from "next/router";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles(() => ({
+    root: {},
+    container: {
+        width: "80vw",
+        margin: "0 auto",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "flex-start"
+    },
+    containerItem: {
+        flex: "0 0 312px",
+        marginBottom: "72px",
+        maxWidth: "312px"
+    }
+}));
 
 type ScrollProperties = {
     scrollY: number;
@@ -23,6 +38,7 @@ type Props = {
 
 const VariantList: FC<Props> = ({ variantIds }) => {
     const router = useRouter();
+    const classes = useStyles();
 
     const saveScrollPosition = () => (scrollProperties.scrollY = window.scrollY);
 
@@ -37,10 +53,10 @@ const VariantList: FC<Props> = ({ variantIds }) => {
     }, [router.asPath]);
 
     return (
-        <div className={css["VariantList"]}>
-            <div className={css["container"]}>
+        <div className={classnames(classes.root, css["VariantList"])}>
+            <div className={classnames(classes.container, css["container"])}>
                 {map(variantIds, id => (
-                    <div className={css["container-item"]}>
+                    <div className={classnames(classes.containerItem, css["container-item"])}>
                         <VariantListItem variantId={id} />
                     </div>
                 ))}

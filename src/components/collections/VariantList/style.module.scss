@@ -1,25 +1,11 @@
 @import "src/assets/styles/mixins";
 
 .VariantList {
-
   .container {
-    width: 80vw;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-
-
     @include mobile() {
       width: 100vw;
     }
-
     &-item {
-      flex: 0 0 312px;
-      margin-bottom: 72px;
-      max-width: 312px;
-
-
       @include mobile() {
         &:nth-child(n) {
           $side-margin: calc((100vw - 1 * 312px) / 2);
@@ -40,7 +26,6 @@
           margin: 0 $side-margin 72px $side-margin;
         }
       }
-
     }
   }
 }

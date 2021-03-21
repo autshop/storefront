@@ -1,7 +1,6 @@
 import { FC, memo, useEffect, useState } from "react";
 import {
     Card,
-    CardActionArea,
     CardActions,
     CardContent,
     CardMedia,
@@ -12,13 +11,12 @@ import {
     Typography
 } from "@material-ui/core";
 import { map, get, find } from "lodash";
-import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
+//
 import { addSizeAction } from "~lib/cart/actions";
 import Button from "~components/common/Button";
 import { getVariantById } from "~lib/variant/selectors";
 import { StoreState } from "~lib/state";
-import { VariantSize } from "~lib/variant/types";
 
 type Props = {
     variantId: number;
