@@ -18,6 +18,7 @@ import { addSizeAction } from "~lib/cart/actions";
 import Button from "~components/common/Button";
 import { getVariantById } from "~lib/variant/selectors";
 import { StoreState } from "~lib/state";
+import { VariantSize } from "~lib/variant/types";
 
 type Props = {
     variantId: number;
@@ -61,33 +62,28 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
 
     const handleSizeChange = size => setSelectedSizeId(get(size, "target.value", null));
     const handleAddToBagClick = () => {
-        const size = 1;
-        dispatch(addSizeAction(size));
+        dispatch(addSizeAction(selectedSizeId));
     };
 
     if (!variant) return null;
 
     return (
         <Card className={classes.root}>
-            <Link href={`/variants/${variantId}`} passHref>
-                <CardActionArea>
-                    <CardMedia
-                        className={classes.image}
-                        component="img"
-                        alt="Contemplative Reptile"
-                        image={variant.imageSrcList[0]}
-                        title="Contemplative Reptile"
-                    />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="h2">
-                            {variant.name}
-                        </Typography>
-                        <Typography variant="body2" color="textSecondary" component="p">
-                            {variant.description}
-                        </Typography>
-                    </CardContent>
-                </CardActionArea>
-            </Link>
+            <CardMedia
+                className={classes.image}
+                component="img"
+                alt="Contemplative Reptile"
+                image={variant.imageSrcList[0]}
+                title="Contemplative Reptile"
+            />
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                    {variant.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                    {variant.description}
+                </Typography>
+            </CardContent>
 
             <CardContent>
                 <FormControl className={classes.selectFormControl}>
