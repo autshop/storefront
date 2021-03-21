@@ -8,6 +8,7 @@ import { loadCollectionsAction } from "~lib/collections/actions";
 import "~assets/styles/global.scss";
 import { loadVariantsAction } from "~lib/variant/actions";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
+import LoadingScreen from "~components/common/LoadingScreen";
 
 export const MyApp = ({ Component, pageProps }): ReactElement => {
     const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export const MyApp = ({ Component, pageProps }): ReactElement => {
             </Head>
             <Header />
             <Component {...pageProps} />
+            <LoadingScreen />
         </>
     );
 };

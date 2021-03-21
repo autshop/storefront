@@ -1,10 +1,6 @@
 import { FC } from "react";
-import { CircularProgress, TextField, Button, makeStyles, FormHelperText, Typography } from "@material-ui/core";
-import { useForm } from "react-hook-form";
+import { CircularProgress, makeStyles, Typography } from "@material-ui/core";
 //
-import { CheckoutAddressStepTypes, CheckoutContactStepTypes } from "~utils/forms/types";
-import { createFieldErrorFromHookFromError } from "~utils/forms/helpers";
-import ButtonContainer from "~components/common/ButtonContainer";
 import { CheckoutStepKey } from "~lib/checkout/types";
 import { getCheckoutStep } from "~lib/checkout/selectors";
 import { useSelector } from "react-redux";
@@ -25,9 +21,9 @@ const useStyles = makeStyles(theme => ({
     },
     formWrapper: {
         position: "relative",
-        width: "60%",
-        [theme.breakpoints.down("lg")]: {
-            width: "100%"
+        width: "100%",
+        [theme.breakpoints.up("lg")]: {
+            width: "60%"
         }
     },
     progressWrapper: {
