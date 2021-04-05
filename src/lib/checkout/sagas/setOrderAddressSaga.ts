@@ -2,20 +2,13 @@ import { put, retry, select } from "@redux-saga/core/effects";
 import { get } from "lodash";
 import { AxiosResponse } from "axios";
 //
-import {
-    setCheckoutAddress,
-    setCheckoutAddressError,
-    setCheckoutAddressSuccess,
-    setCheckoutContact,
-    setCheckoutContactError,
-    setCheckoutContactSuccess
-} from "~lib/checkout/actions";
+import { setCheckoutAddress, setCheckoutAddressError, setCheckoutAddressSuccess } from "~lib/checkout/actions";
 import { Order } from "~lib/checkout/types";
 import serverApi from "~api/index";
-import { getOrderToken } from "~lib/checkout/selectors";
+import { getOrderId } from "~lib/checkout/selectors";
 
 function* setOrderAddressSaga({ payload: { addressData } }: ReturnType<typeof setCheckoutAddress>) {
-    const token = yield select(getOrderToken);
+    const token = yield select(getOrderId);
     try {
         const { data: order }: AxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${token}/address`, {
             ...addressData

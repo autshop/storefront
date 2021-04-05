@@ -6,6 +6,10 @@ export enum CheckoutActionConstants {
     LOAD_CHECKOUT_SUCCESS = "CHECKOUT/LOAD_CHECKOUT_SUCCESS",
     LOAD_CHECKOUT_ERROR = "CHECKOUT/LOAD_CHECKOUT_ERROR",
 
+    ADD_SIZE = "CHECKOUT/ADD_SIZE",
+    ADD_SIZE_SUCCESS = "CHECKOUT/ADD_SIZE_SUCCESS",
+    ADD_SIZE_ERROR = "CHECKOUT/ADD_SIZE_ERROR",
+
     SET_CHECKOUT_CONTACT = "CHECKOUT/SET_CHECKOUT_CONTACT",
     SET_CHECKOUT_CONTACT_SUCCESS = "CHECKOUT/SET_CHECKOUT_CONTACT_SUCCESS",
     SET_CHECKOUT_CONTACT_ERROR = "CHECKOUT/SET_CHECKOUT_CONTACT_ERROR",
@@ -21,11 +25,8 @@ export enum CheckoutActionConstants {
     SET_CHECKOUT_STEP = "CHECKOUT/SET_CHECKOUT_STEP"
 }
 
-export const loadCheckoutAction = (token: string) => ({
-    type: CheckoutActionConstants.LOAD_CHECKOUT,
-    payload: {
-        token
-    }
+export const loadCheckoutAction = () => ({
+    type: CheckoutActionConstants.LOAD_CHECKOUT
 });
 
 export const loadCheckoutSuccessAction = (order: Order) => ({
@@ -37,6 +38,25 @@ export const loadCheckoutSuccessAction = (order: Order) => ({
 
 export const loadCheckoutActionErrorAction = (error: string) => ({
     type: CheckoutActionConstants.LOAD_CHECKOUT_ERROR,
+    payload: {
+        error
+    }
+});
+
+export const addSizeAction = (sizeId: number) => ({
+    type: CheckoutActionConstants.ADD_SIZE,
+    payload: { sizeId }
+});
+
+export const addSizeSuccessAction = (order: Order) => ({
+    type: CheckoutActionConstants.ADD_SIZE_SUCCESS,
+    payload: {
+        order
+    }
+});
+
+export const addSizeActionErrorAction = (error: string) => ({
+    type: CheckoutActionConstants.ADD_SIZE_ERROR,
     payload: {
         error
     }

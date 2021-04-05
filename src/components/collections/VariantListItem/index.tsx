@@ -13,7 +13,7 @@ import {
 import { map, get, find } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 //
-import { addSizeAction } from "~lib/cart/actions";
+import { addSizeAction } from "~lib/checkout/actions";
 import Button from "~components/common/Button";
 import { getVariantById } from "~lib/variant/selectors";
 import { StoreState } from "~lib/state";
@@ -71,7 +71,7 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
                 className={classes.image}
                 component="img"
                 alt="Contemplative Reptile"
-                image={variant.imageSrcList[0]}
+                image={variant.imageSrc}
                 title="Contemplative Reptile"
             />
             <CardContent>

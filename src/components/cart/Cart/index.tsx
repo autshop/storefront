@@ -2,12 +2,12 @@ import { FC } from "react";
 import Link from "next/link";
 import { makeStyles, Paper } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { keys } from "lodash";
 //
 import { getIsCartShown } from "~lib/ui/selectors";
 import Button from "~components/common/Button";
 import CartContent from "~components/cart/CartContent";
-import { keys } from "lodash";
-import { getCart } from "~lib/cart/selectors";
+import { getOrderItems } from "~lib/checkout/selectors";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -32,9 +32,9 @@ const Cart: FC = () => {
     const classes = useStyles();
 
     const isCartShown = useSelector(getIsCartShown);
-    const cart = useSelector(getCart);
+    const orderItems = useSelector(getOrderItems);
 
-    if ((keys(cart) || []).length <= 0) return null;
+    if ((keys(orderItems) || []).length <= 0) return null;
 
     if (!isCartShown) return null;
 

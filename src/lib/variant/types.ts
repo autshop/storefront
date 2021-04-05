@@ -4,6 +4,7 @@ export type VariantSize = {
     id: number;
     measurement: string;
     quantity: number;
+    position: number;
 };
 
 export type Variant = {
@@ -11,7 +12,7 @@ export type Variant = {
     name: string;
     description: string;
     sku: number;
-    imageSrcList: string[];
+    imageSrc: string;
     sizes: VariantSize[];
     status: VariantStatus;
 };

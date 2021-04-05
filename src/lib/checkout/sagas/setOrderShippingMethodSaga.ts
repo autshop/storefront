@@ -9,10 +9,10 @@ import {
 } from "~lib/checkout/actions";
 import { Order } from "~lib/checkout/types";
 import serverApi from "~api/index";
-import { getOrderToken } from "~lib/checkout/selectors";
+import { getOrderId } from "~lib/checkout/selectors";
 
 function* setShippingMethodSaga({ payload: { shippingMethodId } }: ReturnType<typeof setCheckoutShippingMethod>) {
-    const token = yield select(getOrderToken);
+    const token = yield select(getOrderId);
     try {
         const { data: order }: AxiosResponse<Order> = yield retry(
             2,

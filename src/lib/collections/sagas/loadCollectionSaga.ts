@@ -1,4 +1,5 @@
 import { put, retry } from "@redux-saga/core/effects";
+import { AxiosResponse } from "axios";
 import { get } from "lodash";
 //
 import {
@@ -6,13 +7,15 @@ import {
     loadCollectionsErrorAction,
     loadCollectionsSuccessAction
 } from "~lib/collections/actions";
-import { fetchCollections } from "~mock/index";
+import serverApi from "~api/index";
 
 function* loadCollectionsSaga() {
     yield put(loadCollectionsAction());
     try {
-        //const { data: collections }: AxiosResponse<Collections[]> = yield retry(2, 1500, serverApi.get, "/collections");
-        const collections = yield retry(2, 1500, fetchCollections);
+        //TODO TYPE
+        const {
+            data: { data: collections }
+        }: AxiosResponse<any> = yield retry(2, 1500, serverApi.get, "/collection");
 
         yield put(loadCollectionsSuccessAction(collections));
     } catch (e) {

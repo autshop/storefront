@@ -2,8 +2,9 @@ import { FC } from "react";
 import { get } from "lodash";
 import { Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
+//
 import { StoreState } from "~lib/state";
-import { getCartItemById } from "~lib/cart/selectors";
+import { getOrderItemById } from "~lib/checkout/selectors";
 import { getVariantById } from "~lib/variant/selectors";
 
 const useStyles = makeStyles(() => ({
@@ -39,7 +40,7 @@ type Props = {
 const CartItem: FC<Props> = ({ cartItemId }) => {
     const classes = useStyles();
 
-    const cartItem = useSelector((state: StoreState) => getCartItemById(state, cartItemId));
+    const cartItem = useSelector((state: StoreState) => getOrderItemById(state, cartItemId));
     const variant = useSelector((state: StoreState) => getVariantById(state, cartItem.variantId));
 
     const size = get(cartItem, "size.measurement", null);

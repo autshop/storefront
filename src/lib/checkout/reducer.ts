@@ -49,6 +49,26 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
             });
         }
         //
+        case CheckoutActionConstants.ADD_SIZE: {
+            return produce(state, draft => {
+                draft.isLoading = true;
+            });
+        }
+        case CheckoutActionConstants.ADD_SIZE_SUCCESS: {
+            return produce(state, draft => {
+                const { order } = action.payload;
+                draft.isLoading = false;
+                draft.order = order;
+            });
+        }
+        case CheckoutActionConstants.ADD_SIZE_ERROR: {
+            return produce(state, draft => {
+                const { error } = action.payload;
+                draft.isLoading = false;
+                draft.error = error;
+            });
+        }
+        //
         case CheckoutActionConstants.SET_CHECKOUT_CONTACT: {
             return produce(state, draft => {
                 draft.steps[CheckoutStepKey.CONTACT].isLoading = true;

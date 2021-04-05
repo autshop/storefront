@@ -13,10 +13,10 @@ export type CheckoutStep = {
 };
 
 export enum OrderState {
-    CHECKOUT_CONTACT,
-    CHECKOUT_ADDRESS,
-    CHECKOUT_METHOD,
-    FINALIZED
+    CHECKOUT_CONTACT = "CHECKOUT_CONTACT",
+    CHECKOUT_ADDRESS = "CHECKOUT_ADDRESS",
+    CHECKOUT_METHOD = "CHECKOUT_METHOD",
+    FINALIZED = "FINALIZED"
 }
 
 export type OrderContact = {
@@ -24,12 +24,12 @@ export type OrderContact = {
 };
 
 export type OrderAddress = {
+    id: number;
     firstname: string;
     lastname: string;
     country: string;
     addressLine: string;
     postalCode: number;
-    comment: string;
 };
 
 export type OrderShippingMethod = {
@@ -37,18 +37,11 @@ export type OrderShippingMethod = {
     name: string;
 };
 
-export type OrderItems = {
-    id: number;
-    variant: Variant;
-    size: VariantSize;
-};
-
 export type Order = {
     id: number;
-    token: string;
-    contact: OrderContact;
+    customerEmail: string;
     address: OrderAddress;
-    shippingMethod: OrderShippingMethod;
-    items: OrderItems[];
+    //shippingMethod: OrderShippingMethod;
+    sizes: VariantSize[];
     orderState: OrderState;
 };

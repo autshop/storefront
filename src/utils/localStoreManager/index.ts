@@ -1,5 +1,4 @@
 export enum LocalStorageKeys {
-    CART = "CART",
     ORDER_TOKEN = "ORDER_TOKEN"
 }
 
