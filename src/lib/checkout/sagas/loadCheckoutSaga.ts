@@ -1,10 +1,11 @@
 import { call, put, retry } from "@redux-saga/core/effects";
-import { get } from "lodash";
-import { AxiosResponse } from "axios";
+import { get, toString } from "lodash";
 //
 import { loadCheckoutActionErrorAction, loadCheckoutSuccessAction } from "~lib/checkout/actions";
 import serverApi from "~api/index";
 import LocalStorageManager, { LocalStorageKeys } from "~utils/localStoreManager";
+import { CustomAxiosResponse } from "~utils/api/types";
+import { Order } from "~lib/checkout/types";
 
 function* loadExistingOrder() {
     try {
@@ -12,9 +13,10 @@ function* loadExistingOrder() {
         if (!orderId) {
             return { success: false, order: null };
         }
+
         const {
             data: { data: order }
-        }: AxiosResponse<any> = yield retry(2, 1500, serverApi.get, `/order/${orderId}`);
+        }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.get, `/order/${orderId}`);
 
         return { success: true, order };
     } catch (e) {
@@ -29,12 +31,11 @@ function* loadCheckoutSaga() {
         if (success) {
             yield put(loadCheckoutSuccessAction(order));
         } else {
-            //TODO TYPE
             const {
                 data: { data: order }
-            }: AxiosResponse<any> = yield retry(2, 1500, serverApi.post, `/order`);
+            }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.post, `/order`);
 
-            LocalStorageManager.set(LocalStorageKeys.ORDER_TOKEN, order.id);
+            LocalStorageManager.set(LocalStorageKeys.ORDER_TOKEN, toString(order.id));
             yield put(loadCheckoutSuccessAction(order));
         }
     } catch (e) {

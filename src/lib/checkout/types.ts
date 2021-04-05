@@ -1,4 +1,4 @@
-import { Variant, VariantSize } from "~lib/variant/types";
+import { VariantSize } from "~lib/variant/types";
 
 export enum CheckoutStepKey {
     CONTACT,
@@ -23,6 +23,12 @@ export type OrderContact = {
     email: string;
 };
 
+export type OrderSize = {
+    id: number;
+    quantity: number;
+    size: VariantSize;
+};
+
 export type OrderAddress = {
     id: number;
     firstname: string;
@@ -42,6 +48,6 @@ export type Order = {
     customerEmail: string;
     address: OrderAddress;
     //shippingMethod: OrderShippingMethod;
-    sizes: VariantSize[];
+    sizes: OrderSize[];
     orderState: OrderState;
 };

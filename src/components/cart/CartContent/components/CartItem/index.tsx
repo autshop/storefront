@@ -34,18 +34,20 @@ const useStyles = makeStyles(() => ({
 }));
 
 type Props = {
-    cartItemId: number;
+    orderItemId: number;
 };
 
-const CartItem: FC<Props> = ({ cartItemId }) => {
+const CartItem: FC<Props> = ({ orderItemId }) => {
     const classes = useStyles();
 
-    const cartItem = useSelector((state: StoreState) => getOrderItemById(state, cartItemId));
-    const variant = useSelector((state: StoreState) => getVariantById(state, cartItem.variantId));
+    const orderItem = useSelector((state: StoreState) => getOrderItemById(state, orderItemId));
+    const size = orderItem.size;
+    const variant = useSelector((state: StoreState) => getVariantById(state, size.variantId));
 
-    const size = get(cartItem, "size.measurement", null);
+    const measurement = get(size, "measurement", null);
+    const quantity = get(orderItem, "quantity", null);
 
-    if (!cartItem || !variant) return null;
+    if (!orderItem || !variant || !size) return null;
 
     return (
         <Card className={classes.root}>
@@ -60,7 +62,10 @@ const CartItem: FC<Props> = ({ cartItemId }) => {
                         {variant.name}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary" className={classes.text}>
-                        Size <b>{size}</b>
+                        Size <b>{measurement}</b>
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary" className={classes.text}>
+                        Quantity <b>{quantity}</b>
                     </Typography>
                 </CardContent>
             </div>

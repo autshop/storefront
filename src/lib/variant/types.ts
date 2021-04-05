@@ -2,6 +2,7 @@ export type VariantStatus = "active" | "disabled" | "active_on";
 
 export type VariantSize = {
     id: number;
+    variantId: number;
     measurement: string;
     quantity: number;
     position: number;

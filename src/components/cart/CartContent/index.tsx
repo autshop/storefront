@@ -20,7 +20,7 @@ const CartContent: FC = () => {
     return (
         <div className={classes.root}>
             {map(orderItem, ({ id }) => (
-                <CartItem cartItemId={id} />
+                <CartItem orderItemId={id} />
             ))}
         </div>
     );

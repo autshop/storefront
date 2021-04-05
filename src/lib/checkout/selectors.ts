@@ -7,7 +7,7 @@ const getState = (state: StoreState) => state.checkout;
 
 export const getOrder = (state: StoreState) => getState(state).order;
 
-export const getOrderItems = (state: StoreState) => get(getOrder(state), "sizes", []);
+export const getOrderItems = (state: StoreState) => get(getOrder(state), "orderSizes", []);
 
 export const getOrderId = (state: StoreState) => get(getOrder(state), "id", null);
 
