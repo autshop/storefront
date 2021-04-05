@@ -13,7 +13,7 @@ function* setOrderContactSaga({ payload: { contactData } }: ReturnType<typeof se
         const {
             data: { data: order }
         }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${token}/contact`, {
-            ...contactData
+            customerEmail: contactData.email
         });
 
         yield put(setCheckoutContactSuccess(order));

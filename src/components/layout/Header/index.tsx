@@ -87,7 +87,7 @@ const Header: FC = () => {
                                     onClose={handleMobileMenuClose}
                                 >
                                     {map(collections, ({ id, name }) => (
-                                        <MenuItem onClick={handleMobileMenuClose}>
+                                        <MenuItem key={id} onClick={handleMobileMenuClose}>
                                             <Link
                                                 href={`/collections/[collection-id]/`}
                                                 as={`/collections/${id}`}
@@ -105,7 +105,12 @@ const Header: FC = () => {
                             <>
                                 <Typography>Example Store Logo</Typography>
                                 {map(collections, ({ id, name }) => (
-                                    <Link href={`/collections/[collection-id]/`} as={`/collections/${id}`} passHref>
+                                    <Link
+                                        key={id}
+                                        href={`/collections/[collection-id]/`}
+                                        as={`/collections/${id}`}
+                                        passHref
+                                    >
                                         <Typography className={classes.collectionLink}>{name}</Typography>
                                     </Link>
                                 ))}

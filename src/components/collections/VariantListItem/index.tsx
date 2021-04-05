@@ -28,7 +28,8 @@ const useStyles = makeStyles({
     },
     image: {
         height: 312,
-        width: 232
+        width: 232,
+        margin: "0 auto"
     },
     actions: {
         display: "block",

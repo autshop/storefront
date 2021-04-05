@@ -39,6 +39,7 @@ const ShippingStep: FC<Props> = ({ classes }) => {
         <div>
             {map(tempconfig, step => (
                 <ShippingStepChoice
+                    key={step.id}
                     id={step.id}
                     name={step.name}
                     setChoice={setShippingMethodId}
