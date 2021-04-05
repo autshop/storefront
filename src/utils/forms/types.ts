@@ -10,3 +10,7 @@ export type CheckoutAddressStepTypes = {
     postalCode: number | null;
     comment: string | null;
 };
+
+export type FieldErrors = {
+    [field: string]: string;
+};

@@ -1,4 +1,5 @@
 import { VariantSize } from "~lib/variant/types";
+import { FieldErrors } from "~utils/forms/types";
 
 export enum CheckoutStepKey {
     CONTACT,
@@ -9,7 +10,7 @@ export enum CheckoutStepKey {
 
 export type CheckoutStep = {
     isLoading: boolean;
-    error: string;
+    errors: FieldErrors;
 };
 
 export enum OrderState {

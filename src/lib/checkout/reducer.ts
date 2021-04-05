@@ -20,10 +20,10 @@ export const initialState: CheckoutState = {
     error: "",
     currentStep: CheckoutStepKey.CONTACT,
     steps: {
-        [CheckoutStepKey.CONTACT]: { isLoading: false, error: "" },
-        [CheckoutStepKey.ADDRESS]: { isLoading: false, error: "" },
-        [CheckoutStepKey.METHOD]: { isLoading: false, error: "" },
-        [CheckoutStepKey.FINAL]: { isLoading: false, error: "" }
+        [CheckoutStepKey.CONTACT]: { isLoading: false, errors: {} },
+        [CheckoutStepKey.ADDRESS]: { isLoading: false, errors: {} },
+        [CheckoutStepKey.METHOD]: { isLoading: false, errors: {} },
+        [CheckoutStepKey.FINAL]: { isLoading: false, errors: {} }
     }
 };
 
@@ -83,9 +83,9 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
         }
         case CheckoutActionConstants.SET_CHECKOUT_CONTACT_ERROR: {
             return produce(state, draft => {
-                const { error } = action.payload;
+                const { errors } = action.payload;
                 draft.steps[CheckoutStepKey.CONTACT].isLoading = false;
-                draft.steps[CheckoutStepKey.CONTACT].error = error;
+                draft.steps[CheckoutStepKey.CONTACT].errors = errors;
             });
         }
         //

@@ -1,5 +1,5 @@
 import { CheckoutStepKey, Order } from "~lib/checkout/types";
-import { CheckoutAddressStepTypes, CheckoutContactStepTypes } from "~utils/forms/types";
+import { CheckoutAddressStepTypes, CheckoutContactStepTypes, FieldErrors } from "~utils/forms/types";
 
 export enum CheckoutActionConstants {
     LOAD_CHECKOUT = "CHECKOUT/LOAD_CHECKOUT",
@@ -76,10 +76,10 @@ export const setCheckoutContactSuccess = (order: Order) => ({
     }
 });
 
-export const setCheckoutContactError = (error: string) => ({
+export const setCheckoutContactError = (errors: FieldErrors) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_CONTACT_ERROR,
     payload: {
-        error
+        errors
     }
 });
 

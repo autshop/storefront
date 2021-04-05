@@ -8,18 +8,18 @@ import { getOrderId } from "~lib/checkout/selectors";
 import { CustomAxiosResponse } from "~utils/api/types";
 
 function* setOrderContactSaga({ payload: { contactData } }: ReturnType<typeof setCheckoutContact>) {
-    const token = yield select(getOrderId);
+    const id = yield select(getOrderId);
     try {
         const {
             data: { data: order }
-        }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${token}/contact`, {
+        }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${id}/contact`, {
             customerEmail: contactData.email
         });
 
         yield put(setCheckoutContactSuccess(order));
     } catch (e) {
         console.log(e);
-        const error = get(e, "data.message", "Failed to set order contact!");
+        const error = get(e, "data.error", []);
         yield put(setCheckoutContactError(error));
     }
 }
