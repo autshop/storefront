@@ -1,25 +1,18 @@
-import {
-    Button,
-    Button as MaterialButton,
-    CardActions,
-    CircularProgress,
-    makeStyles,
-    TextField
-} from "@material-ui/core";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { Button } from "@material-ui/core";
+import { FC, useEffect, useState } from "react";
 import { map } from "lodash";
 import ShippingStepChoice from "~components/checkout/steps/ShippingStep/ShippingStepChoice";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckoutContactStepTypes } from "~utils/forms/types";
-import { loadShippingMethodsAction, setCheckoutContact, setCheckoutShippingMethod } from "~lib/checkout/actions";
-import { getShippingMethods } from "~lib/checkout/selectors";
+import { loadShippingMethodsAction, setCheckoutShippingMethod } from "~lib/checkout/actions";
+import { getOrderShippingMethodId, getShippingMethods } from "~lib/checkout/selectors";
 
 type Props = {
     classes: any;
 };
 
 const ShippingStep: FC<Props> = ({ classes }) => {
-    const [shippingMethodId, setShippingMethodId] = useState(null);
+    const orderShippingMethodId = useSelector(getOrderShippingMethodId);
+    const [shippingMethodId, setShippingMethodId] = useState(orderShippingMethodId);
 
     const shippingMethods = useSelector(getShippingMethods);
     const dispatch = useDispatch();
@@ -27,6 +20,10 @@ const ShippingStep: FC<Props> = ({ classes }) => {
     useEffect(() => {
         dispatch(loadShippingMethodsAction());
     }, []);
+
+    useEffect(() => {
+        setShippingMethodId(orderShippingMethodId);
+    }, [orderShippingMethodId]);
 
     const handleSave = () => dispatch(setCheckoutShippingMethod(shippingMethodId));
 

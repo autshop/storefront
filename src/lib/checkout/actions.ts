@@ -1,5 +1,7 @@
-import { CheckoutStepKey, Order, ShippingMethod } from '~lib/checkout/types';
-import { CheckoutAddressStepTypes, CheckoutContactStepTypes, FieldErrors } from "~utils/forms/types";
+import { CheckoutStepKey, Order, ShippingMethod } from "~lib/checkout/types";
+import { CheckoutContactStepTypes } from "~utils/forms/types/checkout/contactStep";
+import { FieldErrors } from "~utils/forms/types";
+import { CheckoutAddressStepTypes } from "~utils/forms/types/checkout/addressStep";
 
 export enum CheckoutActionConstants {
     LOAD_CHECKOUT = "CHECKOUT/LOAD_CHECKOUT",
@@ -24,10 +26,9 @@ export enum CheckoutActionConstants {
 
     SET_CHECKOUT_STEP = "CHECKOUT/SET_CHECKOUT_STEP",
 
-
     LOAD_SHIPPING_METHODS = "CHECKOUT/LOAD_SHIPPING_METHODS",
     LOAD_SHIPPING_METHODS_SUCCESS = "CHECKOUT/LOAD_SHIPPING_METHODS_SUCCESS",
-    LOAD_SHIPPING_METHODS_ERROR = "CHECKOUT/LOAD_SHIPPING_METHODS_ERROR",
+    LOAD_SHIPPING_METHODS_ERROR = "CHECKOUT/LOAD_SHIPPING_METHODS_ERROR"
 }
 
 export const loadCheckoutAction = () => ({
@@ -102,10 +103,10 @@ export const setCheckoutAddressSuccess = (order: Order) => ({
     }
 });
 
-export const setCheckoutAddressError = (error: string) => ({
+export const setCheckoutAddressError = (errors: FieldErrors) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_ADDRESS_ERROR,
     payload: {
-        error
+        errors
     }
 });
 
@@ -136,7 +137,6 @@ export const setCheckoutStep = (step: CheckoutStepKey) => ({
         step
     }
 });
-
 
 export const loadShippingMethodsAction = () => ({
     type: CheckoutActionConstants.LOAD_SHIPPING_METHODS

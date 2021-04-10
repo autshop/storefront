@@ -113,9 +113,9 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
         }
         case CheckoutActionConstants.SET_CHECKOUT_ADDRESS_ERROR: {
             return produce(state, draft => {
-                const { error } = action.payload;
+                const { errors } = action.payload;
                 draft.steps[CheckoutStepKey.ADDRESS].isLoading = false;
-                draft.steps[CheckoutStepKey.ADDRESS].errors = error;
+                draft.steps[CheckoutStepKey.ADDRESS].errors = errors;
             });
         }
         //

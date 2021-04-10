@@ -22,10 +22,17 @@ export const getCheckoutStepIsDone = (state: StoreState, checkoutStepKey: Checko
     return isCheckoutStepDone(checkoutStepKey, orderState);
 };
 
+export const getCheckoutStepErrors = (state: StoreState, checkoutStepKey: CheckoutStepKey) =>
+    get(getCheckoutStep(state, checkoutStepKey), "errors", {});
+
 export const getOrderItemById = (state: StoreState, id: number) =>
     find(getOrderItems(state), ({ id: _id }) => id === _id);
 
-export const getOrderCustomerEmail = (state: StoreState) => getOrder(state)?.customerEmail;
+export const getOrderCustomerEmail = (state: StoreState) => get(getOrder(state), "customerEmail", null);
+
+export const getOrderAddress = (state: StoreState) => get(getOrder(state), "address", null);
+
+export const getOrderShippingMethodId = (state: StoreState) => get(getOrder(state), "shippingMethodId", null);
 
 export const getShippingMethods = (state: StoreState) => getState(state).shippingMethods.shippingMethods;
 

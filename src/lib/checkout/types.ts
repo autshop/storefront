@@ -14,6 +14,7 @@ export type CheckoutStep = {
 };
 
 export enum OrderState {
+    INITIAL = "INITIAL",
     CHECKOUT_CONTACT = "CHECKOUT_CONTACT",
     CHECKOUT_ADDRESS = "CHECKOUT_ADDRESS",
     CHECKOUT_METHOD = "CHECKOUT_METHOD",

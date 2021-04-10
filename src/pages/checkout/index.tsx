@@ -4,10 +4,11 @@ import { makeStyles } from "@material-ui/core";
 import CartContent from "~components/cart/CartContent";
 import AddressStep from "~components/checkout/steps/AddressStep";
 import ShippingStep from "~components/checkout/steps/ShippingStep";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showCartAction } from "~lib/ui/actions";
 import CheckoutStepWrapper from "~components/checkout/CheckoutStepWrapper";
 import { CheckoutStepKey } from "~lib/checkout/types";
+import { getOrder } from "~lib/checkout/selectors";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -45,12 +46,15 @@ const useStyles = makeStyles(theme => ({
 
 const Checkout: FC = () => {
     const classes = useStyles();
+    const order = useSelector(getOrder);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(showCartAction(false));
     }, []);
+
+    if (!order) return null;
 
     return (
         <div className={classes.root}>

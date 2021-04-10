@@ -1,12 +1,13 @@
-import { FC, useEffect } from "react";
-import { TextField, Button } from "@material-ui/core";
+import { FC } from "react";
+import { Button, TextField } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 //
-import { CheckoutContactStepTypes } from "~utils/forms/types";
-import { createFieldErrorFromHookFromError } from "~utils/forms/helpers";
 import { useDispatch, useSelector } from "react-redux";
 import { setCheckoutContact } from "~lib/checkout/actions";
-import { getOrderCustomerEmail } from "~lib/checkout/selectors";
+import { getCheckoutStepErrors, getOrderCustomerEmail } from "~lib/checkout/selectors";
+import { CheckoutContactStepFieldNames, CheckoutContactStepTypes } from "~utils/forms/types/checkout/contactStep";
+import { StoreState } from "~lib/state";
+import { CheckoutStepKey } from "~lib/checkout/types";
 
 type Props = {
     classes: any;
@@ -14,16 +15,15 @@ type Props = {
 
 const ContactStep: FC<Props> = ({ classes }) => {
     const customerEmail = useSelector(getOrderCustomerEmail);
+    const errors = useSelector((state: StoreState) => getCheckoutStepErrors(state, CheckoutStepKey.CONTACT));
 
     const dispatch = useDispatch();
 
+    const { register, handleSubmit } = useForm<CheckoutContactStepTypes>({
+        defaultValues: { [CheckoutContactStepFieldNames.EMAIL]: customerEmail }
+    });
+
     const handleSave = (formData: CheckoutContactStepTypes) => dispatch(setCheckoutContact(formData));
-
-    const { register, handleSubmit, errors, setValue } = useForm<CheckoutContactStepTypes>();
-
-    useEffect(() => {
-        setValue("email", customerEmail);
-    }, [customerEmail]);
 
     return (
         <>
@@ -32,10 +32,11 @@ const ContactStep: FC<Props> = ({ classes }) => {
                     className={classes.input}
                     label="Email"
                     id="email"
-                    name="email"
+                    name={CheckoutContactStepFieldNames.EMAIL}
                     inputRef={register({ required: true })}
                     required={true}
-                    {...createFieldErrorFromHookFromError("email", errors, "Please fill this field!")}
+                    error={!!errors[CheckoutContactStepFieldNames.EMAIL]}
+                    helperText={errors[CheckoutContactStepFieldNames.EMAIL]}
                 />
                 <div className={classes["button-container"]}>
                     <Button type="submit" variant="contained" color="primary" className={classes.button}>

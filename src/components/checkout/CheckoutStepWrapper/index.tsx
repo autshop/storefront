@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { CircularProgress, makeStyles, Typography } from "@material-ui/core";
+import { FC, ReactElement } from "react";
+import { CircularProgress, makeStyles } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 //
 import { CheckoutStepKey } from "~lib/checkout/types";
@@ -9,6 +9,9 @@ import { StoreState } from "~lib/state";
 import Separator from "~components/common/Separator";
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        marginBottom: "16px"
+    },
     stepHeader: {
         display: "flex",
         justifyContent: "space-between",
@@ -58,7 +61,7 @@ const useStyles = makeStyles(theme => ({
 
 type Props = {
     title: string;
-    children: any;
+    children: ReactElement;
     checkoutStepKey: CheckoutStepKey;
 };
 
@@ -70,19 +73,21 @@ const CheckoutStep: FC<Props> = ({ title, children, checkoutStepKey }) => {
 
     return (
         <>
-            <div className={classes.stepHeader}>
-                <h1 className={classes.title}>{title}</h1>
-                {checkoutStepIsDone ? <DoneIcon /> : null}
+            <div className={classes.root}>
+                <div className={classes.stepHeader}>
+                    <h1 className={classes.title}>{title}</h1>
+                    {!!checkoutStepIsDone ? <DoneIcon /> : null}
+                </div>
+                <div className={classes.formWrapper}>
+                    {children}
+                    {checkoutStep.isLoading ? (
+                        <div className={classes.progressWrapper}>
+                            <CircularProgress className={classes.progress} />
+                        </div>
+                    ) : null}
+                </div>
+                {/*<Typography className={classes.errorMessage}></Typography>*/}
             </div>
-            <div className={classes.formWrapper}>
-                {children}
-                {checkoutStep.isLoading ? (
-                    <div className={classes.progressWrapper}>
-                        <CircularProgress className={classes.progress} />
-                    </div>
-                ) : null}
-            </div>
-            <Typography className={classes.errorMessage}>{"TODO ERRORS"}</Typography>
             <Separator />
         </>
     );
