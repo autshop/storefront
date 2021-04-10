@@ -1,15 +1,23 @@
 import { put, retry, select } from "@redux-saga/core/effects";
 //
-import { setCheckoutAddress, setCheckoutAddressError, setCheckoutAddressSuccess } from "~lib/checkout/actions";
-import { Order } from "~lib/checkout/types";
+import {
+    clearCheckoutStepErrorsAction,
+    setCheckoutAddressAction,
+    setCheckoutAddressErrorAction,
+    setCheckoutAddressSuccessAction,
+    setCheckoutStepIsLoadingAction
+} from "~lib/checkout/actions";
+import { CheckoutStepKey, Order } from "~lib/checkout/types";
 import serverApi from "~api/index";
 import { getOrderId } from "~lib/checkout/selectors";
 import { CustomAxiosResponse } from "~utils/api/types";
 import { createApiFieldErrorTransformer } from "~utils/forms/types";
 import { CheckoutAddressStepFieldNames, fieldPairs } from "~utils/forms/types/checkout/addressStep";
 
-function* setOrderAddressSaga({ payload: { addressData } }: ReturnType<typeof setCheckoutAddress>) {
+function* setOrderAddressSaga({ payload: { addressData } }: ReturnType<typeof setCheckoutAddressAction>) {
     const token = yield select(getOrderId);
+    yield put(setCheckoutStepIsLoadingAction(CheckoutStepKey.ADDRESS));
+    yield put(clearCheckoutStepErrorsAction(CheckoutStepKey.ADDRESS));
     try {
         const {
             [CheckoutAddressStepFieldNames.FIRST_NAME]: firstName,
@@ -33,12 +41,12 @@ function* setOrderAddressSaga({ payload: { addressData } }: ReturnType<typeof se
             postalCode
         });
 
-        yield put(setCheckoutAddressSuccess(order));
+        yield put(setCheckoutAddressSuccessAction(order));
     } catch (e) {
         console.log(e);
         const validationErrorTransformer = createApiFieldErrorTransformer(fieldPairs);
         const errors = validationErrorTransformer(e);
-        yield put(setCheckoutAddressError(errors));
+        yield put(setCheckoutAddressErrorAction(errors));
     }
 }
 export default setOrderAddressSaga;

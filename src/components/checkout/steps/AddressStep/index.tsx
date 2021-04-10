@@ -5,7 +5,7 @@ import { get } from "lodash";
 //
 import ButtonContainer from "~components/common/ButtonContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { setCheckoutAddress } from "~lib/checkout/actions";
+import { setCheckoutAddressAction } from "~lib/checkout/actions";
 import { CheckoutAddressStepFieldNames, CheckoutAddressStepTypes } from "~utils/forms/types/checkout/addressStep";
 import { StoreState } from "~lib/state";
 import { getCheckoutStepErrors, getOrderAddress } from "~lib/checkout/selectors";
@@ -32,7 +32,7 @@ const AddressStep: FC<Props> = ({ classes }) => {
         }
     });
 
-    const handleSave = (formData: CheckoutAddressStepTypes) => dispatch(setCheckoutAddress(formData));
+    const handleSave = (formData: CheckoutAddressStepTypes) => dispatch(setCheckoutAddressAction(formData));
 
     return (
         <>

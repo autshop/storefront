@@ -3,7 +3,7 @@ import { Button, TextField } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 //
 import { useDispatch, useSelector } from "react-redux";
-import { setCheckoutContact } from "~lib/checkout/actions";
+import { setCheckoutContactAction } from "~lib/checkout/actions";
 import { getCheckoutStepErrors, getOrderCustomerEmail } from "~lib/checkout/selectors";
 import { CheckoutContactStepFieldNames, CheckoutContactStepTypes } from "~utils/forms/types/checkout/contactStep";
 import { StoreState } from "~lib/state";
@@ -23,7 +23,7 @@ const ContactStep: FC<Props> = ({ classes }) => {
         defaultValues: { [CheckoutContactStepFieldNames.EMAIL]: customerEmail }
     });
 
-    const handleSave = (formData: CheckoutContactStepTypes) => dispatch(setCheckoutContact(formData));
+    const handleSave = (formData: CheckoutContactStepTypes) => dispatch(setCheckoutContactAction(formData));
 
     return (
         <>

@@ -25,6 +25,8 @@ export enum CheckoutActionConstants {
     SET_CHECKOUT_SHIPPING_METHOD_ERROR = "CHECKOUT/SET_CHECKOUT_SHIPPING_METHOD_ERROR",
 
     SET_CHECKOUT_STEP = "CHECKOUT/SET_CHECKOUT_STEP",
+    SET_CHECKOUT_STEP_IS_LOADING = "CHECKOUT/SET_CHECKOUT_STEP_IS_LOADING",
+    CLEAR_CHECKOUT_STEP_ERROR = "CHECKOUT/CLEAR_CHECKOUT_STEP_ERROR",
 
     LOAD_SHIPPING_METHODS = "CHECKOUT/LOAD_SHIPPING_METHODS",
     LOAD_SHIPPING_METHODS_SUCCESS = "CHECKOUT/LOAD_SHIPPING_METHODS_SUCCESS",
@@ -68,73 +70,81 @@ export const addSizeActionErrorAction = (error: string) => ({
     }
 });
 
-export const setCheckoutContact = (contactData: CheckoutContactStepTypes) => ({
+export const setCheckoutContactAction = (contactData: CheckoutContactStepTypes) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_CONTACT,
     payload: {
         contactData
     }
 });
 
-export const setCheckoutContactSuccess = (order: Order) => ({
+export const setCheckoutContactSuccessAction = (order: Order) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_CONTACT_SUCCESS,
     payload: {
         order
     }
 });
 
-export const setCheckoutContactError = (errors: FieldErrors) => ({
+export const setCheckoutContactErrorAction = (errors: FieldErrors) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_CONTACT_ERROR,
     payload: {
         errors
     }
 });
 
-export const setCheckoutAddress = (addressData: CheckoutAddressStepTypes) => ({
+export const setCheckoutAddressAction = (addressData: CheckoutAddressStepTypes) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_ADDRESS,
     payload: {
         addressData
     }
 });
 
-export const setCheckoutAddressSuccess = (order: Order) => ({
+export const setCheckoutAddressSuccessAction = (order: Order) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_ADDRESS_SUCCESS,
     payload: {
         order
     }
 });
 
-export const setCheckoutAddressError = (errors: FieldErrors) => ({
+export const setCheckoutAddressErrorAction = (errors: FieldErrors) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_ADDRESS_ERROR,
     payload: {
         errors
     }
 });
 
-export const setCheckoutShippingMethod = (shippingMethodId: number) => ({
+export const setCheckoutShippingMethodAction = (shippingMethodId: number) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_SHIPPING_METHOD,
     payload: {
         shippingMethodId
     }
 });
 
-export const setCheckoutShippingMethodSuccess = (order: Order) => ({
+export const setCheckoutShippingMethodSuccessAction = (order: Order) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_SHIPPING_METHOD_SUCCESS,
     payload: {
         order
     }
 });
 
-export const setCheckoutShippingMethodError = (error: string) => ({
+export const setCheckoutShippingMethodErrorAction = (error: string) => ({
     type: CheckoutActionConstants.SET_CHECKOUT_SHIPPING_METHOD_ERROR,
     payload: {
         error
     }
 });
 
-export const setCheckoutStep = (step: CheckoutStepKey) => ({
-    type: CheckoutActionConstants.SET_CHECKOUT_STEP,
+export const setCheckoutStepIsLoadingAction = (checkoutStepKey: CheckoutStepKey, isLoading = true) => ({
+    type: CheckoutActionConstants.SET_CHECKOUT_STEP_IS_LOADING,
     payload: {
-        step
+        checkoutStepKey,
+        isLoading
+    }
+});
+
+export const clearCheckoutStepErrorsAction = (checkoutStepKey: CheckoutStepKey) => ({
+    type: CheckoutActionConstants.CLEAR_CHECKOUT_STEP_ERROR,
+    payload: {
+        checkoutStepKey
     }
 });
 

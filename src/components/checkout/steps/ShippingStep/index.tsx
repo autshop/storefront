@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { map } from "lodash";
 import ShippingStepChoice from "~components/checkout/steps/ShippingStep/ShippingStepChoice";
 import { useDispatch, useSelector } from "react-redux";
-import { loadShippingMethodsAction, setCheckoutShippingMethod } from "~lib/checkout/actions";
+import { loadShippingMethodsAction, setCheckoutShippingMethodAction } from "~lib/checkout/actions";
 import { getOrderShippingMethodId, getShippingMethods } from "~lib/checkout/selectors";
 
 type Props = {
@@ -25,7 +25,7 @@ const ShippingStep: FC<Props> = ({ classes }) => {
         setShippingMethodId(orderShippingMethodId);
     }, [orderShippingMethodId]);
 
-    const handleSave = () => dispatch(setCheckoutShippingMethod(shippingMethodId));
+    const handleSave = () => dispatch(setCheckoutShippingMethodAction(shippingMethodId));
 
     return (
         <div>
