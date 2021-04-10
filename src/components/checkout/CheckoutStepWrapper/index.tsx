@@ -1,13 +1,19 @@
 import { FC } from "react";
 import { CircularProgress, makeStyles, Typography } from "@material-ui/core";
+import DoneIcon from "@material-ui/icons/Done";
 //
 import { CheckoutStepKey } from "~lib/checkout/types";
-import { getCheckoutStep } from "~lib/checkout/selectors";
+import { getCheckoutStep, getCheckoutStepIsDone } from "~lib/checkout/selectors";
 import { useSelector } from "react-redux";
 import { StoreState } from "~lib/state";
 import Separator from "~components/common/Separator";
 
 const useStyles = makeStyles(theme => ({
+    stepHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+    },
     input: {
         width: "100%",
         "padding-bottom": "14px"
@@ -60,10 +66,14 @@ const CheckoutStep: FC<Props> = ({ title, children, checkoutStepKey }) => {
     const classes = useStyles();
 
     const checkoutStep = useSelector((state: StoreState) => getCheckoutStep(state, checkoutStepKey));
+    const checkoutStepIsDone = useSelector((state: StoreState) => getCheckoutStepIsDone(state, checkoutStepKey));
 
     return (
         <>
-            <h1 className={classes.title}>{title}</h1>
+            <div className={classes.stepHeader}>
+                <h1 className={classes.title}>{title}</h1>
+                {checkoutStepIsDone ? <DoneIcon /> : null}
+            </div>
             <div className={classes.formWrapper}>
                 {children}
                 {checkoutStep.isLoading ? (
@@ -72,9 +82,10 @@ const CheckoutStep: FC<Props> = ({ title, children, checkoutStepKey }) => {
                     </div>
                 ) : null}
             </div>
-            <Typography className={classes.errorMessage}>{checkoutStep?.error}</Typography>
+            <Typography className={classes.errorMessage}>{"TODO ERRORS"}</Typography>
             <Separator />
         </>
     );
 };
+
 export default CheckoutStep;

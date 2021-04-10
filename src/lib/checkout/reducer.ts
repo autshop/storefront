@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import { produce } from "immer";
 //
-import { CheckoutStep, CheckoutStepKey, Order } from "~lib/checkout/types";
+import { CheckoutStep, CheckoutStepKey, Order, ShippingMethod } from "~lib/checkout/types";
 import { CheckoutActionConstants } from "~lib/checkout/actions";
 
 export type CheckoutState = {
@@ -11,6 +11,11 @@ export type CheckoutState = {
     currentStep: CheckoutStepKey;
     steps: {
         [key: string]: CheckoutStep;
+    };
+    shippingMethods: {
+        isLoading: boolean;
+        error: string;
+        shippingMethods: ShippingMethod[];
     };
 };
 
@@ -24,6 +29,11 @@ export const initialState: CheckoutState = {
         [CheckoutStepKey.ADDRESS]: { isLoading: false, errors: {} },
         [CheckoutStepKey.METHOD]: { isLoading: false, errors: {} },
         [CheckoutStepKey.FINAL]: { isLoading: false, errors: {} }
+    },
+    shippingMethods: {
+        isLoading: false,
+        error: "",
+        shippingMethods: []
     }
 };
 
@@ -105,7 +115,7 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
             return produce(state, draft => {
                 const { error } = action.payload;
                 draft.steps[CheckoutStepKey.ADDRESS].isLoading = false;
-                draft.steps[CheckoutStepKey.ADDRESS].error = error;
+                draft.steps[CheckoutStepKey.ADDRESS].errors = error;
             });
         }
         //
@@ -125,7 +135,7 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
             return produce(state, draft => {
                 const { error } = action.payload;
                 draft.steps[CheckoutStepKey.METHOD].isLoading = false;
-                draft.steps[CheckoutStepKey.METHOD].error = error;
+                draft.steps[CheckoutStepKey.METHOD].errors = error;
             });
         }
         //
@@ -136,6 +146,29 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
                 draft.currentStep = step;
             });
         }
+
+        //
+
+        case CheckoutActionConstants.LOAD_SHIPPING_METHODS: {
+            return produce(state, draft => {
+                draft.shippingMethods.isLoading = true;
+            });
+        }
+        case CheckoutActionConstants.LOAD_SHIPPING_METHODS_SUCCESS: {
+            return produce(state, draft => {
+                const { shippingMethods } = action.payload;
+                draft.shippingMethods.isLoading = false;
+                draft.shippingMethods.shippingMethods = shippingMethods;
+            });
+        }
+        case CheckoutActionConstants.LOAD_SHIPPING_METHODS_ERROR: {
+            return produce(state, draft => {
+                const { error } = action.payload;
+                draft.shippingMethods.isLoading = false;
+                draft.shippingMethods.error = error;
+            });
+        }
+
         default: {
             return state;
         }

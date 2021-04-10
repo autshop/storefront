@@ -6,12 +6,13 @@ import {
     makeStyles,
     TextField
 } from "@material-ui/core";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { map } from "lodash";
 import ShippingStepChoice from "~components/checkout/steps/ShippingStep/ShippingStepChoice";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckoutContactStepTypes } from "~utils/forms/types";
-import { setCheckoutContact, setCheckoutShippingMethod } from "~lib/checkout/actions";
+import { loadShippingMethodsAction, setCheckoutContact, setCheckoutShippingMethod } from "~lib/checkout/actions";
+import { getShippingMethods } from "~lib/checkout/selectors";
 
 type Props = {
     classes: any;
@@ -20,30 +21,24 @@ type Props = {
 const ShippingStep: FC<Props> = ({ classes }) => {
     const [shippingMethodId, setShippingMethodId] = useState(null);
 
+    const shippingMethods = useSelector(getShippingMethods);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadShippingMethodsAction());
+    }, []);
 
     const handleSave = () => dispatch(setCheckoutShippingMethod(shippingMethodId));
 
-    const tempconfig = [
-        {
-            id: 1,
-            name: "Regular shipping"
-        },
-        {
-            id: 2,
-            name: "Express Shipping"
-        }
-    ];
-
     return (
         <div>
-            {map(tempconfig, step => (
+            {map(shippingMethods, shippingMethod => (
                 <ShippingStepChoice
-                    key={step.id}
-                    id={step.id}
-                    name={step.name}
+                    key={shippingMethod.id}
+                    id={shippingMethod.id}
+                    name={shippingMethod.name}
                     setChoice={setShippingMethodId}
-                    isSelected={step.id === shippingMethodId}
+                    isSelected={shippingMethod.id === shippingMethodId}
                 />
             ))}
             <div className={classes["button-container"]}>

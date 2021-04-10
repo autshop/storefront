@@ -20,6 +20,11 @@ export enum OrderState {
     FINALIZED = "FINALIZED"
 }
 
+export type ShippingMethod = {
+    id: number;
+    name: string;
+};
+
 export type OrderContact = {
     email: string;
 };

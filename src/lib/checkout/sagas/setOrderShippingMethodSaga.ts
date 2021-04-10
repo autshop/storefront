@@ -16,7 +16,7 @@ function* setShippingMethodSaga({ payload: { shippingMethodId } }: ReturnType<ty
     try {
         const {
             data: { data: order }
-        }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${token}/shipping-method`, {
+        }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${token}/shippingMethod`, {
             shippingMethodId
         });
 
