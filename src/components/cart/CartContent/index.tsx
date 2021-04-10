@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
-import { map, keys } from "lodash";
+import { map } from "lodash";
 //
-import { getCart } from "~lib/cart/selectors";
+import { getOrderItems } from "~lib/checkout/selectors";
 import CartItem from "~components/cart/CartContent/components/CartItem";
 
 const useStyles = makeStyles({
@@ -15,12 +15,12 @@ const useStyles = makeStyles({
 const CartContent: FC = () => {
     const classes = useStyles();
 
-    const cart = useSelector(getCart);
+    const orderItem = useSelector(getOrderItems);
 
     return (
         <div className={classes.root}>
-            {map(cart, ({ id }) => (
-                <CartItem cartItemId={id} />
+            {map(orderItem, ({ id }) => (
+                <CartItem orderItemId={id} />
             ))}
         </div>
     );

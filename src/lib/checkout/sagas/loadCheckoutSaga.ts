@@ -1,16 +1,43 @@
-import { put, retry } from "@redux-saga/core/effects";
-import { get } from "lodash";
-import { AxiosResponse } from "axios";
+import { call, put, retry } from "@redux-saga/core/effects";
+import { get, toString } from "lodash";
 //
-import { loadCheckoutAction, loadCheckoutActionErrorAction, loadCheckoutSuccessAction } from "~lib/checkout/actions";
-import { Order } from "~lib/checkout/types";
+import { loadCheckoutActionErrorAction, loadCheckoutSuccessAction } from "~lib/checkout/actions";
 import serverApi from "~api/index";
+import LocalStorageManager, { LocalStorageKeys } from "~utils/localStoreManager";
+import { CustomAxiosResponse } from "~utils/api/types";
+import { Order } from "~lib/checkout/types";
 
-function* loadCheckoutSaga({ payload: { token } }: ReturnType<typeof loadCheckoutAction>) {
+function* loadExistingOrder() {
     try {
-        const { data: order }: AxiosResponse<Order> = yield retry(2, 1500, serverApi.get, `/order/${token}`);
+        const orderId = LocalStorageManager.get(LocalStorageKeys.ORDER_TOKEN);
+        if (!orderId) {
+            return { success: false, order: null };
+        }
 
-        yield put(loadCheckoutSuccessAction(order));
+        const {
+            data: { data: order }
+        }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.get, `/order/${orderId}`);
+
+        return { success: true, order };
+    } catch (e) {
+        return { success: false, order: null };
+    }
+}
+
+function* loadCheckoutSaga() {
+    try {
+        const { success, order } = yield call(loadExistingOrder);
+
+        if (success) {
+            yield put(loadCheckoutSuccessAction(order));
+        } else {
+            const {
+                data: { data: order }
+            }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.post, `/order`);
+
+            LocalStorageManager.set(LocalStorageKeys.ORDER_TOKEN, toString(order.id));
+            yield put(loadCheckoutSuccessAction(order));
+        }
     } catch (e) {
         console.log(e);
         const error = get(e, "data.message", "Failed to load order!");

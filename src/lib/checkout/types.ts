@@ -1,4 +1,5 @@
-import { Variant, VariantSize } from "~lib/variant/types";
+import { VariantSize } from "~lib/variant/types";
+import { FieldErrors } from "~utils/forms/types";
 
 export enum CheckoutStepKey {
     CONTACT,
@@ -9,27 +10,39 @@ export enum CheckoutStepKey {
 
 export type CheckoutStep = {
     isLoading: boolean;
-    error: string;
+    errors: FieldErrors;
 };
 
 export enum OrderState {
-    CHECKOUT_CONTACT,
-    CHECKOUT_ADDRESS,
-    CHECKOUT_METHOD,
-    FINALIZED
+    INITIAL = "INITIAL",
+    CHECKOUT_CONTACT = "CHECKOUT_CONTACT",
+    CHECKOUT_ADDRESS = "CHECKOUT_ADDRESS",
+    CHECKOUT_METHOD = "CHECKOUT_METHOD",
+    FINALIZED = "FINALIZED"
 }
+
+export type ShippingMethod = {
+    id: number;
+    name: string;
+};
 
 export type OrderContact = {
     email: string;
 };
 
+export type OrderSize = {
+    id: number;
+    quantity: number;
+    size: VariantSize;
+};
+
 export type OrderAddress = {
+    id: number;
     firstname: string;
     lastname: string;
     country: string;
     addressLine: string;
     postalCode: number;
-    comment: string;
 };
 
 export type OrderShippingMethod = {
@@ -37,18 +50,11 @@ export type OrderShippingMethod = {
     name: string;
 };
 
-export type OrderItems = {
-    id: number;
-    variant: Variant;
-    size: VariantSize;
-};
-
 export type Order = {
     id: number;
-    token: string;
-    contact: OrderContact;
+    customerEmail: string;
     address: OrderAddress;
-    shippingMethod: OrderShippingMethod;
-    items: OrderItems[];
+    //shippingMethod: OrderShippingMethod;
+    sizes: OrderSize[];
     orderState: OrderState;
 };

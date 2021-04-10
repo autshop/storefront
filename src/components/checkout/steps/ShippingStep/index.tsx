@@ -1,48 +1,41 @@
-import {
-    Button,
-    Button as MaterialButton,
-    CardActions,
-    CircularProgress,
-    makeStyles,
-    TextField
-} from "@material-ui/core";
-import { FC, ReactNode, useState } from "react";
+import { Button } from "@material-ui/core";
+import { FC, useEffect, useState } from "react";
 import { map } from "lodash";
 import ShippingStepChoice from "~components/checkout/steps/ShippingStep/ShippingStepChoice";
 import { useDispatch, useSelector } from "react-redux";
-import { CheckoutContactStepTypes } from "~utils/forms/types";
-import { setCheckoutContact, setCheckoutShippingMethod } from "~lib/checkout/actions";
+import { loadShippingMethodsAction, setCheckoutShippingMethodAction } from "~lib/checkout/actions";
+import { getOrderShippingMethodId, getShippingMethods } from "~lib/checkout/selectors";
 
 type Props = {
     classes: any;
 };
 
 const ShippingStep: FC<Props> = ({ classes }) => {
-    const [shippingMethodId, setShippingMethodId] = useState(null);
+    const orderShippingMethodId = useSelector(getOrderShippingMethodId);
+    const [shippingMethodId, setShippingMethodId] = useState(orderShippingMethodId);
 
+    const shippingMethods = useSelector(getShippingMethods);
     const dispatch = useDispatch();
 
-    const handleSave = () => dispatch(setCheckoutShippingMethod(shippingMethodId));
+    useEffect(() => {
+        dispatch(loadShippingMethodsAction());
+    }, []);
 
-    const tempconfig = [
-        {
-            id: 1,
-            name: "Regular shipping"
-        },
-        {
-            id: 2,
-            name: "Express Shipping"
-        }
-    ];
+    useEffect(() => {
+        setShippingMethodId(orderShippingMethodId);
+    }, [orderShippingMethodId]);
+
+    const handleSave = () => dispatch(setCheckoutShippingMethodAction(shippingMethodId));
 
     return (
         <div>
-            {map(tempconfig, step => (
+            {map(shippingMethods, shippingMethod => (
                 <ShippingStepChoice
-                    id={step.id}
-                    name={step.name}
+                    key={shippingMethod.id}
+                    id={shippingMethod.id}
+                    name={shippingMethod.name}
                     setChoice={setShippingMethodId}
-                    isSelected={step.id === shippingMethodId}
+                    isSelected={shippingMethod.id === shippingMethodId}
                 />
             ))}
             <div className={classes["button-container"]}>

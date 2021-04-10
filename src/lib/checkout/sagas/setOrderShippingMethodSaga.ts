@@ -1,34 +1,34 @@
 import { put, retry, select } from "@redux-saga/core/effects";
 import { get } from "lodash";
-import { AxiosResponse } from "axios";
 //
 import {
-    setCheckoutShippingMethod,
-    setCheckoutShippingMethodError,
-    setCheckoutShippingMethodSuccess
+    clearCheckoutStepErrorsAction,
+    setCheckoutShippingMethodAction,
+    setCheckoutShippingMethodErrorAction,
+    setCheckoutShippingMethodSuccessAction,
+    setCheckoutStepIsLoadingAction
 } from "~lib/checkout/actions";
-import { Order } from "~lib/checkout/types";
+import { CheckoutStepKey, Order } from "~lib/checkout/types";
 import serverApi from "~api/index";
-import { getOrderToken } from "~lib/checkout/selectors";
+import { getOrderId } from "~lib/checkout/selectors";
+import { CustomAxiosResponse } from "~utils/api/types";
 
-function* setShippingMethodSaga({ payload: { shippingMethodId } }: ReturnType<typeof setCheckoutShippingMethod>) {
-    const token = yield select(getOrderToken);
+function* setShippingMethodSaga({ payload: { shippingMethodId } }: ReturnType<typeof setCheckoutShippingMethodAction>) {
+    const token = yield select(getOrderId);
+    yield put(setCheckoutStepIsLoadingAction(CheckoutStepKey.METHOD));
+    yield put(clearCheckoutStepErrorsAction(CheckoutStepKey.METHOD));
     try {
-        const { data: order }: AxiosResponse<Order> = yield retry(
-            2,
-            1500,
-            serverApi.put,
-            `/order/${token}/shipping-method`,
-            {
-                shippingMethodId
-            }
-        );
+        const {
+            data: { data: order }
+        }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${token}/shippingMethod`, {
+            shippingMethodId
+        });
 
-        yield put(setCheckoutShippingMethodSuccess(order));
+        yield put(setCheckoutShippingMethodSuccessAction(order));
     } catch (e) {
         console.log(e);
         const error = get(e, "data.message", "Failed to set order shipping method!");
-        yield put(setCheckoutShippingMethodError(error));
+        yield put(setCheckoutShippingMethodErrorAction(error));
     }
 }
 export default setShippingMethodSaga;

@@ -1,14 +1,16 @@
 import { put, retry } from "@redux-saga/core/effects";
 import { get } from "lodash";
 //
-import { loadVariantsAction, loadVariantsSuccessAction, loadVariantsErrorAction } from "~lib/variant/actions";
-import { fetchVariants } from "~mock/index";
+import { loadVariantsSuccessAction, loadVariantsErrorAction } from "~lib/variant/actions";
+import serverApi from "~api/index";
+import { CustomAxiosResponse } from "~utils/api/types";
+import { Variant } from "~lib/variant/types";
 
 function* loadVariantsSaga() {
-    yield put(loadVariantsAction());
     try {
-        //const { data: variants }: AxiosResponse<Variant[]> = yield retry(2, 1500, serverApi.get, "/variants");
-        const variants = yield retry(2, 1500, fetchVariants);
+        const {
+            data: { data: variants }
+        }: CustomAxiosResponse<Variant[]> = yield retry(2, 1500, serverApi.get, "/variant");
 
         yield put(loadVariantsSuccessAction(variants));
     } catch (e) {

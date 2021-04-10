@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import { produce } from "immer";
 //
-import { CheckoutStep, CheckoutStepKey, Order } from "~lib/checkout/types";
+import { CheckoutStep, CheckoutStepKey, Order, ShippingMethod } from "~lib/checkout/types";
 import { CheckoutActionConstants } from "~lib/checkout/actions";
 
 export type CheckoutState = {
@@ -12,6 +12,11 @@ export type CheckoutState = {
     steps: {
         [key: string]: CheckoutStep;
     };
+    shippingMethods: {
+        isLoading: boolean;
+        error: string;
+        shippingMethods: ShippingMethod[];
+    };
 };
 
 export const initialState: CheckoutState = {
@@ -20,10 +25,15 @@ export const initialState: CheckoutState = {
     error: "",
     currentStep: CheckoutStepKey.CONTACT,
     steps: {
-        [CheckoutStepKey.CONTACT]: { isLoading: false, error: "" },
-        [CheckoutStepKey.ADDRESS]: { isLoading: false, error: "" },
-        [CheckoutStepKey.METHOD]: { isLoading: false, error: "" },
-        [CheckoutStepKey.FINAL]: { isLoading: false, error: "" }
+        [CheckoutStepKey.CONTACT]: { isLoading: false, errors: {} },
+        [CheckoutStepKey.ADDRESS]: { isLoading: false, errors: {} },
+        [CheckoutStepKey.METHOD]: { isLoading: false, errors: {} },
+        [CheckoutStepKey.FINAL]: { isLoading: false, errors: {} }
+    },
+    shippingMethods: {
+        isLoading: false,
+        error: "",
+        shippingMethods: []
     }
 };
 
@@ -49,9 +59,23 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
             });
         }
         //
-        case CheckoutActionConstants.SET_CHECKOUT_CONTACT: {
+        case CheckoutActionConstants.ADD_SIZE: {
             return produce(state, draft => {
-                draft.steps[CheckoutStepKey.CONTACT].isLoading = true;
+                draft.isLoading = true;
+            });
+        }
+        case CheckoutActionConstants.ADD_SIZE_SUCCESS: {
+            return produce(state, draft => {
+                const { order } = action.payload;
+                draft.isLoading = false;
+                draft.order = order;
+            });
+        }
+        case CheckoutActionConstants.ADD_SIZE_ERROR: {
+            return produce(state, draft => {
+                const { error } = action.payload;
+                draft.isLoading = false;
+                draft.error = error;
             });
         }
         case CheckoutActionConstants.SET_CHECKOUT_CONTACT_SUCCESS: {
@@ -63,15 +87,9 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
         }
         case CheckoutActionConstants.SET_CHECKOUT_CONTACT_ERROR: {
             return produce(state, draft => {
-                const { error } = action.payload;
+                const { errors } = action.payload;
                 draft.steps[CheckoutStepKey.CONTACT].isLoading = false;
-                draft.steps[CheckoutStepKey.CONTACT].error = error;
-            });
-        }
-        //
-        case CheckoutActionConstants.SET_CHECKOUT_ADDRESS: {
-            return produce(state, draft => {
-                draft.steps[CheckoutStepKey.ADDRESS].isLoading = true;
+                draft.steps[CheckoutStepKey.CONTACT].errors = errors;
             });
         }
         case CheckoutActionConstants.SET_CHECKOUT_ADDRESS_SUCCESS: {
@@ -83,15 +101,9 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
         }
         case CheckoutActionConstants.SET_CHECKOUT_ADDRESS_ERROR: {
             return produce(state, draft => {
-                const { error } = action.payload;
+                const { errors } = action.payload;
                 draft.steps[CheckoutStepKey.ADDRESS].isLoading = false;
-                draft.steps[CheckoutStepKey.ADDRESS].error = error;
-            });
-        }
-        //
-        case CheckoutActionConstants.SET_CHECKOUT_SHIPPING_METHOD: {
-            return produce(state, draft => {
-                draft.steps[CheckoutStepKey.METHOD].isLoading = true;
+                draft.steps[CheckoutStepKey.ADDRESS].errors = errors;
             });
         }
         case CheckoutActionConstants.SET_CHECKOUT_SHIPPING_METHOD_SUCCESS: {
@@ -105,15 +117,44 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
             return produce(state, draft => {
                 const { error } = action.payload;
                 draft.steps[CheckoutStepKey.METHOD].isLoading = false;
-                draft.steps[CheckoutStepKey.METHOD].error = error;
+                draft.steps[CheckoutStepKey.METHOD].errors = error;
             });
         }
-        //
-
         case CheckoutActionConstants.SET_CHECKOUT_STEP: {
             return produce(state, draft => {
                 const { step } = action.payload;
                 draft.currentStep = step;
+            });
+        }
+        case CheckoutActionConstants.LOAD_SHIPPING_METHODS: {
+            return produce(state, draft => {
+                draft.shippingMethods.isLoading = true;
+            });
+        }
+        case CheckoutActionConstants.LOAD_SHIPPING_METHODS_SUCCESS: {
+            return produce(state, draft => {
+                const { shippingMethods } = action.payload;
+                draft.shippingMethods.isLoading = false;
+                draft.shippingMethods.shippingMethods = shippingMethods;
+            });
+        }
+        case CheckoutActionConstants.LOAD_SHIPPING_METHODS_ERROR: {
+            return produce(state, draft => {
+                const { error } = action.payload;
+                draft.shippingMethods.isLoading = false;
+                draft.shippingMethods.error = error;
+            });
+        }
+        case CheckoutActionConstants.SET_CHECKOUT_STEP_IS_LOADING: {
+            return produce(state, draft => {
+                const { isLoading, checkoutStepKey } = action.payload;
+                draft.steps[checkoutStepKey].isLoading = isLoading;
+            });
+        }
+        case CheckoutActionConstants.CLEAR_CHECKOUT_STEP_ERROR: {
+            return produce(state, draft => {
+                const { checkoutStepKey } = action.payload;
+                draft.steps[checkoutStepKey].errors = {};
             });
         }
         default: {

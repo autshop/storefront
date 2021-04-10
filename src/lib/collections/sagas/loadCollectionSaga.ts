@@ -1,18 +1,16 @@
 import { put, retry } from "@redux-saga/core/effects";
 import { get } from "lodash";
 //
-import {
-    loadCollectionsAction,
-    loadCollectionsErrorAction,
-    loadCollectionsSuccessAction
-} from "~lib/collections/actions";
-import { fetchCollections } from "~mock/index";
+import { loadCollectionsErrorAction, loadCollectionsSuccessAction } from "~lib/collections/actions";
+import serverApi from "~api/index";
+import { CustomAxiosResponse } from "~utils/api/types";
+import { Collection } from "~lib/collections/types";
 
 function* loadCollectionsSaga() {
-    yield put(loadCollectionsAction());
     try {
-        //const { data: collections }: AxiosResponse<Collections[]> = yield retry(2, 1500, serverApi.get, "/collections");
-        const collections = yield retry(2, 1500, fetchCollections);
+        const {
+            data: { data: collections }
+        }: CustomAxiosResponse<Collection[]> = yield retry(2, 1500, serverApi.get, "/collection");
 
         yield put(loadCollectionsSuccessAction(collections));
     } catch (e) {

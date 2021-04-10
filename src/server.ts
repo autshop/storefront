@@ -12,7 +12,7 @@ const handle = app.getRequestHandler();
     const server = express();
     server.get("*", (req, res) => handle(req, res));
 
-    const port = process.env.SERVER_PORT || 3000;
+    const port = process.env.NEXT_SERVER_PORT || 3000;
     await server.listen(port);
     console.log("Server is listening on port", port);
 })();

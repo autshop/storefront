@@ -2,8 +2,9 @@ import { FC } from "react";
 import { get } from "lodash";
 import { Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
+//
 import { StoreState } from "~lib/state";
-import { getCartItemById } from "~lib/cart/selectors";
+import { getOrderItemById } from "~lib/checkout/selectors";
 import { getVariantById } from "~lib/variant/selectors";
 
 const useStyles = makeStyles(() => ({
@@ -33,18 +34,20 @@ const useStyles = makeStyles(() => ({
 }));
 
 type Props = {
-    cartItemId: number;
+    orderItemId: number;
 };
 
-const CartItem: FC<Props> = ({ cartItemId }) => {
+const CartItem: FC<Props> = ({ orderItemId }) => {
     const classes = useStyles();
 
-    const cartItem = useSelector((state: StoreState) => getCartItemById(state, cartItemId));
-    const variant = useSelector((state: StoreState) => getVariantById(state, cartItem.variantId));
+    const orderItem = useSelector((state: StoreState) => getOrderItemById(state, orderItemId));
+    const size = orderItem.size;
+    const variant = useSelector((state: StoreState) => getVariantById(state, size.variantId));
 
-    const size = get(cartItem, "size.measurement", null);
+    const measurement = get(size, "measurement", null);
+    const quantity = get(orderItem, "quantity", null);
 
-    if (!cartItem || !variant) return null;
+    if (!orderItem || !variant || !size) return null;
 
     return (
         <Card className={classes.root}>
@@ -59,7 +62,10 @@ const CartItem: FC<Props> = ({ cartItemId }) => {
                         {variant.name}
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary" className={classes.text}>
-                        Size <b>{size}</b>
+                        Size <b>{measurement}</b>
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary" className={classes.text}>
+                        Quantity <b>{quantity}</b>
                     </Typography>
                 </CardContent>
             </div>
