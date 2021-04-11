@@ -3,11 +3,11 @@ import { Variant, VariantSize } from "~lib/variant/types";
 
 //note: ID-s will be different per variant
 const sizes: VariantSize[] = [
-    { id: 1, quantity: 0, measurement: "XS" },
-    { id: 2, quantity: 0, measurement: "S" },
-    { id: 3, quantity: 2, measurement: "M" },
-    { id: 4, quantity: 3, measurement: "L" },
-    { id: 5, quantity: 6, measurement: "XL" }
+    { id: 1, quantity: 0, measurement: "XS", variantId: 1, position: 1 },
+    { id: 2, quantity: 0, measurement: "S", variantId: 1, position: 1 },
+    { id: 3, quantity: 2, measurement: "M", variantId: 1, position: 1 },
+    { id: 4, quantity: 3, measurement: "L", variantId: 1, position: 1 },
+    { id: 5, quantity: 6, measurement: "XL", variantId: 1, position: 1 }
 ];
 
 const imageSrcList = [
@@ -21,7 +21,7 @@ const variants: Variant[] = [
         id: 1,
         sizes: sizes,
         name: "Blue Top",
-        imageSrcList: imageSrcList,
+        imageSrc: "asd",
         sku: 23223,
         status: "active",
         description: "Szep Ruha"
@@ -30,7 +30,7 @@ const variants: Variant[] = [
         id: 2,
         sizes: sizes,
         name: "Red top",
-        imageSrcList: imageSrcList,
+        imageSrc: "asd",
         sku: 23223,
         status: "active",
         description: "Szep Ruha"
@@ -39,7 +39,7 @@ const variants: Variant[] = [
         id: 3,
         sizes: sizes,
         name: "Fancy Dress",
-        imageSrcList: imageSrcList,
+        imageSrc: "asd",
         sku: 23223,
         status: "active",
         description: "Szep Ruha"
@@ -48,7 +48,7 @@ const variants: Variant[] = [
         id: 4,
         sizes: sizes,
         name: "Cool shirt",
-        imageSrcList: imageSrcList,
+        imageSrc: "asd",
         sku: 23223,
         status: "active",
         description: "Szep Ruha"
@@ -57,7 +57,7 @@ const variants: Variant[] = [
         id: 5,
         sizes: sizes,
         name: "Worst jeans",
-        imageSrcList: imageSrcList,
+        imageSrc: "asd",
         sku: 23223,
         status: "active",
         description: "Szep Ruha"

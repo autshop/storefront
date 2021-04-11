@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { get } from "lodash";
 import VariantList from "~components/collections/VariantList";
 import { fetchCollections } from "~mock/index";
