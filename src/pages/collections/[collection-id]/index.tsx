@@ -7,6 +7,7 @@ import { makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { getCollectionById } from "~lib/collections/selectors";
 import { StoreState } from "~lib/state";
+import serverApi from "~api/index";
 
 const useStyles = makeStyles({
     collectionName: {
@@ -52,12 +53,9 @@ export const getServerSideProps = async context => {
         params: { "collection-id": collectionId }
     } = context;
 
-    /*const response = await fetch("https://random-data-api.com/api/appliance/random_appliance");
-    const data = await response.json();*/
-
-    const collections: Collection[] = (await fetchCollections()) as Collection[];
-
-    const collection = collections.find(collection => collection.id == collectionId);
+    const {
+        data: { data: collection }
+    } = await serverApi.get(`/collection/${collectionId}`);
 
     return {
         props: { collectionProps: collection }

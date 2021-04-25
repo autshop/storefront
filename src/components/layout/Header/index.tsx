@@ -44,6 +44,9 @@ const useStyles = makeStyles({
         cursor: "pointer",
         lineHeight: "24px"
     },
+    homeLink: {
+        cursor: "pointer"
+    },
     cartLink: {
         "text-align": "right",
         cursor: "pointer"
@@ -98,12 +101,15 @@ const Header: FC = () => {
                                         </MenuItem>
                                     ))}
                                 </Menu>
-
-                                <Typography>Example Store Logo</Typography>
+                                <Link href="/" passHref>
+                                    <Typography className={classes.homeLink}>Example Store Logo</Typography>
+                                </Link>
                             </>
                         ) : (
                             <>
-                                <Typography>Example Store Logo</Typography>
+                                <Link href="/" passHref>
+                                    <Typography className={classes.homeLink}>Example Store Logo</Typography>
+                                </Link>
                                 {map(collections, ({ id, name }) => (
                                     <Link
                                         key={id}
