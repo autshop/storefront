@@ -1,0 +1,30 @@
+on:
+  workflow_dispatch:
+    inputs:
+      TENANT_NAME:
+        description: 'Tenant Name'
+        required: true
+        default: 'default'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to DockerHub Registry
+        run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+      - name: Build, tag, and push image to Docker Hub
+        id: build-image
+        env:
+          DOCKER_HUB_REGISTRY: docker.io
+          DOCKER_HUB_REPOSITORY: akosfi/storefront
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$TENANT_NAME -f ./docker/Dockerfile .
+          docker push $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$TENANT_NAME
+          echo "::set-output name=image::$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$TENANT_NAME"
+
+
