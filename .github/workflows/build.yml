@@ -2,6 +2,12 @@ on:
   push:
     branches:
       - build-next
+  workflow_dispatch:
+    inputs:
+      TENANT_NAME:
+        description: 'Tenant Name'
+        required: true
+        default: 'default'
 
 jobs:
   build:
@@ -20,8 +26,8 @@ jobs:
           DOCKER_HUB_REPOSITORY: akosfi/storefront
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG -f ./docker/Dockerfile .
-          docker push $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG"
+          docker build -t $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$TENANT_NAME -f ./docker/Dockerfile .
+          docker push $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$TENANT_NAME
+          echo "::set-output name=image::$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$TENANT_NAME"
 
 
