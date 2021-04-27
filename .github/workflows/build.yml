@@ -4,7 +4,7 @@ on:
       - build-next
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -20,7 +20,7 @@ jobs:
           DOCKER_HUB_REPOSITORY: akosfi/storefront
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG ./docker/Dockerfile .
+          docker build -t $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG -f ./docker/Dockerfile .
           docker push $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:$IMAGE_TAG"
 
