@@ -27,9 +27,8 @@ jobs:
           DOCKER_HUB_REPOSITORY: akosfi/storefront
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          echo "tenantName: $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:${{ github.event.inputs.tenantName }}"
-          docker build -t "$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:${{ github.events.inputs.TENANT_NAME }}" -f ./docker/Dockerfile .
-          docker push "$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:${{ github.events.inputs.TENANT_NAME }}"
-          echo "::set-output name=image::$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:${{ github.events.inputs.TENANT_NAME }}"
+          docker build -t $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:${{ github.event.inputs.TENANT_NAME }} -f ./docker/Dockerfile .
+          docker push $DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:${{ github.event.inputs.TENANT_NAME }}
+          echo "::set-output name=image::$DOCKER_HUB_REGISTRY/$DOCKER_HUB_REPOSITORY:${{ github.event.inputs.TENANT_NAME }}"
 
 
