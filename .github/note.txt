@@ -1,0 +1,1 @@
+This is an easy way to solve building Next.js images. Later will be replaced by AWS Codebuild.
