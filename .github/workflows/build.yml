@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - build
+      - build-next
 
 jobs:
   deploy:
