@@ -1,7 +1,4 @@
 on:
-  push:
-    branches:
-      - build-next
   workflow_dispatch:
     inputs:
       TENANT_NAME:
