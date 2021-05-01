@@ -77,12 +77,9 @@ const CheckoutStep: FC<Props> = ({ title, children, checkoutStepKey }) => {
 
     const ref = useRef<HTMLDivElement>();
 
-    const orderState = useSelector(getOrderState);
     const checkoutStep = useSelector((state: StoreState) => getCheckoutStep(state, checkoutStepKey));
     const checkoutStepIsDone = useSelector((state: StoreState) => getCheckoutStepIsDone(state, checkoutStepKey));
     const checkoutStepIsCurrent = useSelector((state: StoreState) => getCheckoutStepIsCurrent(state, checkoutStepKey));
-
-    useScrollToCheckoutStep(ref, orderState, checkoutStepKey);
 
     if (!checkoutStepIsCurrent && !checkoutStepIsDone) return null;
 
