@@ -6,7 +6,8 @@ import setOrderContactSaga from "~lib/checkout/sagas/setOrderContactSaga";
 import setOrderAddressSaga from "~lib/checkout/sagas/setOrderAddressSaga";
 import setOrderShippingMethodSaga from "~lib/checkout/sagas/setOrderShippingMethodSaga";
 import addSizeSaga from "~lib/checkout/sagas/addSizeSaga";
-import loadShippingMethodsSaga from '~lib/checkout/sagas/loadShippingMethodsSaga';
+import loadShippingMethodsSaga from "~lib/checkout/sagas/loadShippingMethodsSaga";
+import finalizeOrderSaga from "~lib/checkout/sagas/finalizeOrderSaga";
 
 function* checkoutSaga() {
     yield takeLeading(CheckoutActionConstants.LOAD_CHECKOUT, loadCheckoutSaga);
@@ -15,6 +16,7 @@ function* checkoutSaga() {
     yield takeLeading(CheckoutActionConstants.SET_CHECKOUT_SHIPPING_METHOD, setOrderShippingMethodSaga);
     yield takeLeading(CheckoutActionConstants.ADD_SIZE, addSizeSaga);
     yield takeLatest(CheckoutActionConstants.LOAD_SHIPPING_METHODS, loadShippingMethodsSaga);
+    yield takeLatest(CheckoutActionConstants.FINALIZE_ORDER, finalizeOrderSaga);
 }
 
 export default checkoutSaga;

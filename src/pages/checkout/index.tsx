@@ -1,16 +1,18 @@
 import { FC, useEffect } from "react";
-import ContactStep from "~components/checkout/steps/ContactStep";
+import { keys } from "lodash";
 import { makeStyles } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
+//
+import ContactStep from "~components/checkout/steps/ContactStep";
 import CartContent from "~components/cart/CartContent";
 import AddressStep from "~components/checkout/steps/AddressStep";
 import ShippingStep from "~components/checkout/steps/ShippingStep";
-import { useDispatch, useSelector } from "react-redux";
 import { showCartAction } from "~lib/ui/actions";
 import CheckoutStepWrapper from "~components/checkout/CheckoutStepWrapper";
 import { CheckoutStepKey } from "~lib/checkout/types";
 import { getOrder, getOrderItems } from "~lib/checkout/selectors";
-import { keys } from "lodash";
-import { useRouter } from "next/router";
+import FinalizeStep from "~components/checkout/steps/FinalizeStep";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -48,10 +50,9 @@ const useStyles = makeStyles(theme => ({
 
 const Checkout: FC = () => {
     const classes = useStyles();
+
     const order = useSelector(getOrder);
     const orderItems = useSelector(getOrderItems);
-
-    //if ((keys(orderItems) || []).length <= 0) return null;
 
     const dispatch = useDispatch();
 
@@ -62,7 +63,9 @@ const Checkout: FC = () => {
     }, []);
 
     useEffect(() => {
-        if ((keys(orderItems) || []).length === 0) router.push("/");
+        if ((keys(orderItems) || []).length === 0) {
+            (async () => await router.push("/"))();
+        }
     }, [router.pathname, orderItems]);
 
     if (!order) return null;
@@ -78,6 +81,9 @@ const Checkout: FC = () => {
                 </CheckoutStepWrapper>
                 <CheckoutStepWrapper title={"Shipping"} checkoutStepKey={CheckoutStepKey.METHOD}>
                     <ShippingStep classes={classes} />
+                </CheckoutStepWrapper>
+                <CheckoutStepWrapper title={"Place your order"} checkoutStepKey={CheckoutStepKey.FINALIZE}>
+                    <FinalizeStep classes={classes} />
                 </CheckoutStepWrapper>
             </div>
             <div />

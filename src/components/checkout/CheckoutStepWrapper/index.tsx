@@ -1,10 +1,10 @@
 import { FC, ReactElement } from "react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
+import { useSelector } from "react-redux";
 //
 import { CheckoutStepKey } from "~lib/checkout/types";
-import { getCheckoutStep, getCheckoutStepIsDone } from "~lib/checkout/selectors";
-import { useSelector } from "react-redux";
+import { getCheckoutStep, getCheckoutStepIsCurrent, getCheckoutStepIsDone } from "~lib/checkout/selectors";
 import { StoreState } from "~lib/state";
 import Separator from "~components/common/Separator";
 
@@ -70,6 +70,9 @@ const CheckoutStep: FC<Props> = ({ title, children, checkoutStepKey }) => {
 
     const checkoutStep = useSelector((state: StoreState) => getCheckoutStep(state, checkoutStepKey));
     const checkoutStepIsDone = useSelector((state: StoreState) => getCheckoutStepIsDone(state, checkoutStepKey));
+    const checkoutStepIsCurrent = useSelector((state: StoreState) => getCheckoutStepIsCurrent(state, checkoutStepKey));
+
+    if (!checkoutStepIsCurrent && !checkoutStepIsDone) return null;
 
     return (
         <>

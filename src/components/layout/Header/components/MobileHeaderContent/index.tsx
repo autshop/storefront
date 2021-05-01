@@ -2,12 +2,11 @@ import { FC, memo, useState } from "react";
 import { makeStyles, Menu, MenuItem, Typography } from "@material-ui/core";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { keys, map } from "lodash";
+import { map } from "lodash";
 //
 import MenuIcon from "@material-ui/icons/Menu";
 import { getIsMobileWindow } from "~lib/ui/selectors";
 import { getCollections } from "~lib/collections/selectors";
-import { getOrderItems } from "~lib/checkout/selectors";
 
 const useStyles = makeStyles({
     root: {
@@ -37,10 +36,6 @@ const MobileHeaderContent: FC = () => {
 
     const isMobileWindow = useSelector(getIsMobileWindow);
     const collections = useSelector(getCollections);
-    const orderItems = useSelector(getOrderItems);
-
-    const orderItemCount = (keys(orderItems) || []).length;
-    if (orderItemCount <= 0) return null;
 
     const handleMobileMenuClick = event => {
         setAnchorEl(event.currentTarget);

@@ -2,11 +2,10 @@ import { FC, memo } from "react";
 import { makeStyles, Typography } from "@material-ui/core";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { keys, map } from "lodash";
+import { map } from "lodash";
 //
 import { getIsMobileWindow } from "~lib/ui/selectors";
 import { getCollections } from "~lib/collections/selectors";
-import { getOrderItems } from "~lib/checkout/selectors";
 
 const useStyles = makeStyles({
     root: {
@@ -30,10 +29,6 @@ const DesktopHeaderContent: FC = () => {
 
     const isMobileWindow = useSelector(getIsMobileWindow);
     const collections = useSelector(getCollections);
-    const orderItems = useSelector(getOrderItems);
-
-    const orderItemCount = (keys(orderItems) || []).length;
-    if (orderItemCount <= 0) return null;
 
     if (isMobileWindow) return null;
 

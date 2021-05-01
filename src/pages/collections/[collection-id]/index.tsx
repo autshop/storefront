@@ -1,13 +1,14 @@
 import { FC, useMemo } from "react";
 import { get } from "lodash";
-import VariantList from "~components/collections/VariantList";
-import { fetchCollections } from "~mock/index";
-import { Collection } from "~lib/collections/types";
 import { makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
+//
+import VariantList from "~components/collections/VariantList";
 import { getCollectionById } from "~lib/collections/selectors";
 import { StoreState } from "~lib/state";
 import serverApi from "~api/index";
+import Head from "next/head";
+import { getTenantName } from "~utils/helpers";
 
 const useStyles = makeStyles({
     collectionName: {
@@ -35,16 +36,22 @@ const Collections: FC<Props> = ({ collectionProps }) => {
     }, [collection]);
 
     return (
-        <section>
-            <Typography variant="body1" className={classes.collectionName}>
-                {collectionProps.name}
-            </Typography>
+        <>
+            <Head>
+                <title>{collection.name + " - " + getTenantName()}</title>
+            </Head>
 
-            <Typography variant="body1" className={classes.collectionDescription}>
-                {collectionProps.description}
-            </Typography>
-            <VariantList variantIds={variantIds} />
-        </section>
+            <section>
+                <Typography variant="body1" className={classes.collectionName}>
+                    {collectionProps.name}
+                </Typography>
+
+                <Typography variant="body1" className={classes.collectionDescription}>
+                    {collectionProps.description}
+                </Typography>
+                <VariantList variantIds={variantIds} />
+            </section>
+        </>
     );
 };
 

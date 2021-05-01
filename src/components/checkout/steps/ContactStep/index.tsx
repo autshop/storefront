@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Button, TextField } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-//
 import { useDispatch, useSelector } from "react-redux";
+//
 import { setCheckoutContactAction } from "~lib/checkout/actions";
 import { getCheckoutStepErrors, getOrderCustomerEmail } from "~lib/checkout/selectors";
 import { CheckoutContactStepFieldNames, CheckoutContactStepTypes } from "~utils/forms/types/checkout/contactStep";

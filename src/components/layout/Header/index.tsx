@@ -66,7 +66,6 @@ const Header: FC = () => {
     const orderItems = useSelector(getOrderItems);
 
     const orderItemCount = (keys(orderItems) || []).length;
-    if (orderItemCount <= 0) return null;
 
     const dispatch = useDispatch();
 

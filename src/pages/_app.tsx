@@ -8,6 +8,7 @@ import Header from "~components/layout/Header";
 import "~assets/styles/global.scss";
 import LoadingScreen from "~components/common/LoadingScreen";
 import { initializeAppAction } from "~lib/app/actions";
+import { getTenantName } from "~utils/helpers";
 
 export const MyApp = ({ Component, pageProps }): ReactElement => {
     const dispatch = useDispatch();
@@ -17,7 +18,7 @@ export const MyApp = ({ Component, pageProps }): ReactElement => {
     return (
         <>
             <Head>
-                <title>Hey</title>
+                <title>{getTenantName()}</title>
             </Head>
             <Header />
             <Component {...pageProps} />

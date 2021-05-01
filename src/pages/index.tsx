@@ -2,10 +2,11 @@ import { FC } from "react";
 import Link from "next/link";
 import { map } from "lodash";
 import { useSelector } from "react-redux";
-import { Head } from "next/document";
+import Head from "next/head";
 import { Button, Card, CardContent, makeStyles, Typography } from "@material-ui/core";
 //
 import { getCollections } from "~lib/collections/selectors";
+import { getTenantName } from "~utils/helpers";
 
 const useStyles = makeStyles({
     root: {
@@ -38,6 +39,9 @@ const Index: FC = () => {
 
     return (
         <div>
+            <Head>
+                <title>{getTenantName()}</title>
+            </Head>
             <Card className={classes.root} variant="outlined">
                 <CardContent>
                     <Typography className={classes.title} variant="h5" component="h2">

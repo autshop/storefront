@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 import { produce } from "immer";
-
+//
 import { uiActionConstants } from "~lib/ui/actions";
 
 export type UiState = {
@@ -12,7 +12,7 @@ export type UiState = {
 
 export const initialState: UiState = {
     isCartShown: false,
-    isMobileWindow: false,
+    isMobileWindow: typeof window !== "undefined" ? window.innerWidth <= 900 : false,
     isLoadingScreenShown: false,
     loadingScreenText: ""
 };

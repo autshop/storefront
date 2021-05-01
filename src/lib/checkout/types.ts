@@ -5,7 +5,7 @@ export enum CheckoutStepKey {
     CONTACT,
     ADDRESS,
     METHOD,
-    FINAL
+    FINALIZE
 }
 
 export type CheckoutStep = {

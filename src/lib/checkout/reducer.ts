@@ -28,7 +28,7 @@ export const initialState: CheckoutState = {
         [CheckoutStepKey.CONTACT]: { isLoading: false, errors: {} },
         [CheckoutStepKey.ADDRESS]: { isLoading: false, errors: {} },
         [CheckoutStepKey.METHOD]: { isLoading: false, errors: {} },
-        [CheckoutStepKey.FINAL]: { isLoading: false, errors: {} }
+        [CheckoutStepKey.FINALIZE]: { isLoading: false, errors: {} }
     },
     shippingMethods: {
         isLoading: false,
@@ -155,6 +155,21 @@ const reducer: Reducer<CheckoutState> = (state = initialState, action): Checkout
             return produce(state, draft => {
                 const { checkoutStepKey } = action.payload;
                 draft.steps[checkoutStepKey].errors = {};
+            });
+        }
+
+        case CheckoutActionConstants.FINALIZE_ORDER_SUCCESS: {
+            return produce(state, draft => {
+                const { order } = action.payload;
+                draft.steps[CheckoutStepKey.FINALIZE].isLoading = false;
+                draft.order = order;
+            });
+        }
+        case CheckoutActionConstants.FINALIZE_ORDER_ERROR: {
+            return produce(state, draft => {
+                const { error } = action.payload;
+                draft.steps[CheckoutStepKey.FINALIZE].isLoading = false;
+                draft.steps[CheckoutStepKey.FINALIZE].errors = error;
             });
         }
         default: {

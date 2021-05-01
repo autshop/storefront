@@ -2,7 +2,7 @@ import { get, find } from "lodash";
 //
 import { StoreState } from "~lib/state";
 import { CheckoutStepKey } from "~lib/checkout/types";
-import { isCheckoutStepDone } from "~lib/checkout/helpers/isCheckoutStepDone";
+import { isCheckoutStepCurrent, isCheckoutStepDone } from "~lib/checkout/helpers/isCheckoutStepDone";
 
 const getState = (state: StoreState) => state.checkout;
 
@@ -20,6 +20,11 @@ export const getOrderState = (state: StoreState) => getOrder(state)?.orderState;
 export const getCheckoutStepIsDone = (state: StoreState, checkoutStepKey: CheckoutStepKey) => {
     const orderState = getOrderState(state);
     return isCheckoutStepDone(checkoutStepKey, orderState);
+};
+
+export const getCheckoutStepIsCurrent = (state: StoreState, checkoutStepKey: CheckoutStepKey) => {
+    const orderState = getOrderState(state);
+    return isCheckoutStepCurrent(checkoutStepKey, orderState);
 };
 
 export const getCheckoutStepErrors = (state: StoreState, checkoutStepKey: CheckoutStepKey) =>

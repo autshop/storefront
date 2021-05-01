@@ -56,7 +56,7 @@ const VariantList: FC<Props> = ({ variantIds }) => {
         <div className={classnames(classes.root, css["VariantList"])}>
             <div className={classnames(classes.container, css["container"])}>
                 {map(variantIds, id => (
-                    <div className={classnames(classes.containerItem, css["container-item"])}>
+                    <div className={classnames(classes.containerItem, css["container-item"])} key={id}>
                         <VariantListItem variantId={id} />
                     </div>
                 ))}
