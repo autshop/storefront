@@ -8,7 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { showCartAction } from "~lib/ui/actions";
 import CheckoutStepWrapper from "~components/checkout/CheckoutStepWrapper";
 import { CheckoutStepKey } from "~lib/checkout/types";
-import { getOrder } from "~lib/checkout/selectors";
+import { getOrder, getOrderItems } from "~lib/checkout/selectors";
+import { keys } from "lodash";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,12 +49,21 @@ const useStyles = makeStyles(theme => ({
 const Checkout: FC = () => {
     const classes = useStyles();
     const order = useSelector(getOrder);
+    const orderItems = useSelector(getOrderItems);
+
+    //if ((keys(orderItems) || []).length <= 0) return null;
 
     const dispatch = useDispatch();
+
+    const router = useRouter();
 
     useEffect(() => {
         dispatch(showCartAction(false));
     }, []);
+
+    useEffect(() => {
+        if ((keys(orderItems) || []).length === 0) router.push("/");
+    }, [router.pathname, orderItems]);
 
     if (!order) return null;
 

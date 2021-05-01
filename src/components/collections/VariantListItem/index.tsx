@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import { map, get, find } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
+import Link from "next/link";
 //
 import { addSizeAction } from "~lib/checkout/actions";
 import Button from "~components/common/Button";
@@ -29,7 +30,8 @@ const useStyles = makeStyles({
     image: {
         height: 312,
         width: 232,
-        margin: "0 auto"
+        margin: "0 auto",
+        cursor: "pointer"
     },
     actions: {
         display: "block",
@@ -43,6 +45,9 @@ const useStyles = makeStyles({
     selectFormControl: {
         minWidth: 120,
         padding: "8px 0"
+    },
+    details: {
+        cursor: "pointer"
     }
 });
 
@@ -68,21 +73,26 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
 
     return (
         <Card className={classes.root}>
-            <CardMedia
-                className={classes.image}
-                component="img"
-                alt="Contemplative Reptile"
-                image={variant.imageSrc}
-                title="Contemplative Reptile"
-            />
-            <CardContent>
-                <Typography gutterBottom variant="h5" component="h2">
-                    {variant.name}
-                </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
-                    {variant.description}
-                </Typography>
-            </CardContent>
+            <Link href="/variants/[variant-id]" as={`/variants/${variant.id}`} passHref>
+                <CardMedia
+                    className={classes.image}
+                    component="img"
+                    alt="Contemplative Reptile"
+                    image={variant.imageSrc}
+                    title="Contemplative Reptile"
+                />
+            </Link>
+
+            <Link href="/variants/[variant-id]" as={`/variants/${variant.id}`} passHref>
+                <CardContent className={classes.details}>
+                    <Typography gutterBottom variant="h5" component="h2">
+                        {variant.name}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {variant.description}
+                    </Typography>
+                </CardContent>
+            </Link>
 
             <CardContent>
                 <FormControl className={classes.selectFormControl}>
