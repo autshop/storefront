@@ -1,12 +1,18 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, RefObject, useEffect, useRef } from "react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import { useSelector } from "react-redux";
 //
-import { CheckoutStepKey } from "~lib/checkout/types";
-import { getCheckoutStep, getCheckoutStepIsCurrent, getCheckoutStepIsDone } from "~lib/checkout/selectors";
+import { CheckoutStepKey, OrderState } from "~lib/checkout/types";
+import {
+    getCheckoutStep,
+    getCheckoutStepIsCurrent,
+    getCheckoutStepIsDone,
+    getOrderState
+} from "~lib/checkout/selectors";
 import { StoreState } from "~lib/state";
 import Separator from "~components/common/Separator";
+import useScrollToCheckoutStep from "~utils/hooks/useScrollToCheckoutStep";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -63,20 +69,26 @@ type Props = {
     title: string;
     children: ReactElement;
     checkoutStepKey: CheckoutStepKey;
+    ref?: RefObject<HTMLDivElement>;
 };
 
 const CheckoutStep: FC<Props> = ({ title, children, checkoutStepKey }) => {
     const classes = useStyles();
 
+    const ref = useRef<HTMLDivElement>();
+
+    const orderState = useSelector(getOrderState);
     const checkoutStep = useSelector((state: StoreState) => getCheckoutStep(state, checkoutStepKey));
     const checkoutStepIsDone = useSelector((state: StoreState) => getCheckoutStepIsDone(state, checkoutStepKey));
     const checkoutStepIsCurrent = useSelector((state: StoreState) => getCheckoutStepIsCurrent(state, checkoutStepKey));
+
+    useScrollToCheckoutStep(ref, orderState, checkoutStepKey);
 
     if (!checkoutStepIsCurrent && !checkoutStepIsDone) return null;
 
     return (
         <>
-            <div className={classes.root}>
+            <div className={classes.root} ref={ref} key={checkoutStepKey}>
                 <div className={classes.stepHeader}>
                     <h1 className={classes.title}>{title}</h1>
                     {!!checkoutStepIsDone ? <DoneIcon /> : null}
