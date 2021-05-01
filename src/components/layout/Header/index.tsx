@@ -1,17 +1,16 @@
-import { FC, useState } from "react";
-import { AppBar, makeStyles, Menu, MenuItem, Toolbar, Typography } from "@material-ui/core";
-import Link from "next/link";
+import { FC } from "react";
+import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { map } from "lodash";
-import MenuIcon from "@material-ui/icons/Menu";
-
+import { keys } from "lodash";
 //
 import { showCartAction } from "~lib/ui/actions";
-import { getIsCartShown, getIsMobileWindow } from "~lib/ui/selectors";
+import { getIsCartShown } from "~lib/ui/selectors";
 import Cart from "~components/cart/Cart";
-import { getCollections } from "~lib/collections/selectors";
+import { getOrderItems } from "~lib/checkout/selectors";
+import MobileHeaderContent from "~components/layout/Header/components/MobileHeaderContent";
+import DesktopHeaderContent from "~components/layout/Header/components/DesktopHeaderContent";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
         position: "fixed",
         top: 0,
@@ -23,13 +22,16 @@ const useStyles = makeStyles({
         height: "50px",
         background: "white",
         color: "black",
-        padding: "0 48px"
+        margin: 0,
+        padding: 0
     },
     rootMenu: {
         height: "50px",
         minHeight: "50px",
         display: "flex",
-        "justify-content": "space-between"
+        "justify-content": "space-between",
+        margin: 0,
+        padding: 0
     },
     leftMenu: {
         display: "flex"
@@ -49,83 +51,38 @@ const useStyles = makeStyles({
     },
     cartLink: {
         "text-align": "right",
-        cursor: "pointer"
+        cursor: "pointer",
+        paddingRight: "16px",
+        [theme.breakpoints.up("sm")]: {
+            paddingRight: "24px"
+        }
     }
-});
+}));
 
 const Header: FC = () => {
     const classes = useStyles();
 
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const isMobileWindow = useSelector(getIsMobileWindow);
     const isCartShown = useSelector(getIsCartShown);
-    const collections = useSelector(getCollections);
+    const orderItems = useSelector(getOrderItems);
+
+    const orderItemCount = (keys(orderItems) || []).length;
+    if (orderItemCount <= 0) return null;
 
     const dispatch = useDispatch();
 
     const handleCartToggle = () => dispatch(showCartAction(!isCartShown));
-
-    const handleMobileMenuClick = event => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleMobileMenuClose = () => {
-        setAnchorEl(null);
-    };
 
     return (
         <div className={classes.root}>
             <AppBar position="static" className={classes.appbar}>
                 <Toolbar className={classes.rootMenu}>
                     <div className={classes.leftMenu}>
-                        {isMobileWindow ? (
-                            <>
-                                <MenuIcon onClick={handleMobileMenuClick} className={classes.mobileMenuIcon} />
-                                <Menu
-                                    id="simple-menu"
-                                    anchorEl={anchorEl}
-                                    keepMounted
-                                    open={Boolean(anchorEl)}
-                                    onClose={handleMobileMenuClose}
-                                >
-                                    {map(collections, ({ id, name }) => (
-                                        <MenuItem key={id} onClick={handleMobileMenuClose}>
-                                            <Link
-                                                href={`/collections/[collection-id]/`}
-                                                as={`/collections/${id}`}
-                                                passHref
-                                            >
-                                                <Typography className={classes.collectionLink}>{name}</Typography>
-                                            </Link>
-                                        </MenuItem>
-                                    ))}
-                                </Menu>
-                                <Link href="/" passHref>
-                                    <Typography className={classes.homeLink}>Example Store Logo</Typography>
-                                </Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link href="/" passHref>
-                                    <Typography className={classes.homeLink}>Example Store Logo</Typography>
-                                </Link>
-                                {map(collections, ({ id, name }) => (
-                                    <Link
-                                        key={id}
-                                        href={`/collections/[collection-id]/`}
-                                        as={`/collections/${id}`}
-                                        passHref
-                                    >
-                                        <Typography className={classes.collectionLink}>{name}</Typography>
-                                    </Link>
-                                ))}
-                            </>
-                        )}
+                        <MobileHeaderContent />
+                        <DesktopHeaderContent />
                     </div>
                     <div>
                         <Typography className={classes.cartLink} onClick={handleCartToggle}>
-                            Cart
+                            Cart ({orderItemCount})
                         </Typography>
                     </div>
                 </Toolbar>

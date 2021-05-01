@@ -8,6 +8,7 @@ import { getVariantById } from "~lib/variant/selectors";
 import { StoreState } from "~lib/state";
 import Button from "~components/common/Button";
 import { addSizeAction } from "~lib/checkout/actions";
+import { Variant } from "~lib/variant/types";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -85,20 +86,22 @@ const useStyles = makeStyles(theme => ({
 
 type Props = {
     variantId: number;
+    preLoadedVariantProps: Variant;
 };
 
-const VariantDetails: FC<Props> = ({ variantId }) => {
+const VariantDetails: FC<Props> = ({ variantId, preLoadedVariantProps }) => {
     const classes = useStyles();
 
     const [selectedSizeId, setSelectedSizeId] = useState<number>(null);
 
     const variant = useSelector((state: StoreState) => getVariantById(state, variantId));
-    const sizes = sortBy(variant?.sizes, ["position"]);
+
+    const sortedSizes = sortBy(variant?.sizes || preLoadedVariantProps.sizes, ["position"]);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const firstAvailableSize = find(sizes, ({ quantity }) => quantity > 0);
+        const firstAvailableSize = find(sortedSizes, ({ quantity }) => quantity > 0);
         if (firstAvailableSize && firstAvailableSize.id) setSelectedSizeId(firstAvailableSize.id);
     }, [variantId]);
 
@@ -116,16 +119,16 @@ const VariantDetails: FC<Props> = ({ variantId }) => {
                 </div>
                 <div className={classes.details}>
                     <Typography gutterBottom variant="h5" component="h2" className={classes.variantName}>
-                        <b>{variant.name}</b>
+                        <b>{preLoadedVariantProps.name}</b>
                     </Typography>
 
                     <Typography variant="body2" component="p" className={classes.variantDescription}>
-                        {variant.description}
+                        {preLoadedVariantProps.description}
                     </Typography>
 
                     <div className={classes.actions}>
                         <div className={classes.sizes}>
-                            {map(sizes, size => (
+                            {map(sortedSizes, size => (
                                 <div
                                     className={classNames(classes.size, {
                                         [classes.selectedSize]: selectedSizeId === size.id,

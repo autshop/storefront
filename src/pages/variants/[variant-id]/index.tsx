@@ -1,34 +1,29 @@
-import { FC, useMemo } from "react";
-import { get } from "lodash";
-import { makeStyles, Typography } from "@material-ui/core";
-import { useRouter } from "next/router";
+import { FC } from "react";
+//
 import VariantDetails from "~components/variants/VariantDetails";
+import serverApi from "~api/index";
+import { Variant } from "~lib/variant/types";
 
-const useStyles = makeStyles({});
-type Props = {};
-
-const Variants: FC<Props> = () => {
-    const classes = useStyles();
-
-    const router = useRouter();
-
-    const variantId = Number(get(router, "query.variant-id", null));
-
-    return <VariantDetails variantId={variantId} />;
+type Props = {
+    preLoadedVariantProps: Variant;
 };
-/*
+
+const Variants: FC<Props> = ({ preLoadedVariantProps }) => (
+    <VariantDetails variantId={preLoadedVariantProps.id} preLoadedVariantProps={preLoadedVariantProps} />
+);
+
 export const getServerSideProps = async context => {
     const {
-        params: { "collection-id": collectionId }
+        params: { "variant-id": variantId }
     } = context;
 
     const {
-        data: { data: collection }
-    } = await serverApi.get(`/collection/${collectionId}`);
+        data: { data: variant }
+    } = await serverApi.get(`/variant/${variantId}`);
 
     return {
-        props: { collectionProps: collection }
+        props: { preLoadedVariantProps: variant }
     };
-};*/
+};
 
 export default Variants;

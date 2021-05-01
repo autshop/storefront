@@ -34,7 +34,8 @@ const Cart: FC = () => {
     const isCartShown = useSelector(getIsCartShown);
     const orderItems = useSelector(getOrderItems);
 
-    if ((keys(orderItems) || []).length <= 0) return null;
+    const orderItemCount = (keys(orderItems) || []).length;
+    if (orderItemCount <= 0) return null;
 
     if (!isCartShown) return null;
 
