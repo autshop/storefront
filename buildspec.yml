@@ -10,8 +10,8 @@ phases:
 
   build:
     commands:
-      - docker build -t akosfi/storefront -f ./docker/Dockerfile .
+      - docker build -t akosfi/storefront:$NEXT_PUBLIC_TENANT_NAME -f ./docker/Dockerfile .
 
   post_build:
     commands:
-      - docker push akosfi/storefront:latest
+      - docker push akosfi/storefront:$TENANT_ID
