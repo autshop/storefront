@@ -15,4 +15,3 @@ phases:
   post_build:
     commands:
       - docker push akosfi/storefront:latest
-
