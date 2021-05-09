@@ -1,18 +1,12 @@
-import { FC, ReactElement, RefObject, useEffect, useRef } from "react";
+import { FC, ReactElement, RefObject, useRef } from "react";
 import { CircularProgress, makeStyles } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import { useSelector } from "react-redux";
 //
-import { CheckoutStepKey, OrderState } from "~lib/checkout/types";
-import {
-    getCheckoutStep,
-    getCheckoutStepIsCurrent,
-    getCheckoutStepIsDone,
-    getOrderState
-} from "~lib/checkout/selectors";
+import { CheckoutStepKey } from "~lib/checkout/types";
+import { getCheckoutStep, getCheckoutStepIsCurrent, getCheckoutStepIsDone } from "~lib/checkout/selectors";
 import { StoreState } from "~lib/state";
 import Separator from "~components/common/Separator";
-import useScrollToCheckoutStep from "~utils/hooks/useScrollToCheckoutStep";
 
 const useStyles = makeStyles(theme => ({
     root: {
