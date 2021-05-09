@@ -1,0 +1,18 @@
+version: 0.2
+
+env:
+  shell: bash
+
+phases:
+  pre_build:
+    commands:
+      - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+
+  build:
+    commands:
+      - docker build -t akosfi/storefront -f ./docker/Dockerfile .
+
+  post_build:
+    commands:
+      - docker push akosfi/storefront:latest
+
