@@ -7,6 +7,7 @@ phases:
   pre_build:
     commands:
       - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+      - echo $NEXT_PUBLIC_SERVER_URL > .env # I am ashamed for this, but I have no time :(
 
   build:
     commands:
