@@ -6,6 +6,8 @@ RUN npm ci
 
 COPY . .
 
+RUN rm -rf .env
+
 RUN npm run build
 
 EXPOSE 8080
