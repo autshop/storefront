@@ -10,7 +10,7 @@ phases:
       - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
   build:
     commands:
-      - sudo docker build --build-arg NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL --build-arg=NEXT_PUBLIC_TENANT_NAME=$NEXT_PUBLIC_TENANT_NAME -t akosfi/storefront:$TENANT_ID -f ./docker/Dockerfile .
+      - docker build --build-arg NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL --build-arg=NEXT_PUBLIC_TENANT_NAME=$NEXT_PUBLIC_TENANT_NAME -t akosfi/storefront:$TENANT_ID -f ./docker/Dockerfile .
 
   post_build:
     commands:
