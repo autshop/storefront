@@ -8,11 +8,9 @@ phases:
   pre_build:
     commands:
       - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
-      - echo "NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL" > .env # I am ashamed for this, but I have no time :(
-      - echo "NEXT_PUBLIC_TENANT_NAME=$NEXT_PUBLIC_TENANT_NAME" >> .env
   build:
     commands:
-      - docker build -t akosfi/storefront:$TENANT_ID -f ./docker/Dockerfile .
+      - sudo docker build --build-arg NEXT_PUBLIC_SERVER_URL=$NEXT_PUBLIC_SERVER_URL --build-arg=NEXT_PUBLIC_TENANT_NAME=$NEXT_PUBLIC_TENANT_NAME -t akosfi/storefront:$TENANT_ID -f ./docker/Dockerfile .
 
   post_build:
     commands:
