@@ -51,11 +51,7 @@ const CartItem: FC<Props> = ({ orderItemId }) => {
 
     return (
         <Card className={classes.root}>
-            <CardMedia
-                className={classes.cover}
-                image="https://cdn.shopify.com/s/files/1/0159/3150/6742/products/i-am-an-example-to-others-a-bad-example-mens-premium-t-shirt-t-shirt-graphic-gear-black-s-648295.jpg?v=1572880068"
-                title="Live from space album cover"
-            />
+            <CardMedia className={classes.cover} image={get(variant, "images[0].src")} />
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography variant="body1" className={classes.text}>
@@ -66,6 +62,9 @@ const CartItem: FC<Props> = ({ orderItemId }) => {
                     </Typography>
                     <Typography variant="subtitle1" color="textSecondary" className={classes.text}>
                         Quantity <b>{quantity}</b>
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary" className={classes.text}>
+                        Price <b>{variant.price * quantity} EUR</b>
                     </Typography>
                 </CardContent>
             </div>

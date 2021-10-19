@@ -38,7 +38,7 @@ const Collections: FC<Props> = ({ collectionProps }) => {
     return (
         <>
             <Head>
-                <title>{collection.name + " - " + getTenantName()}</title>
+                <title>{collection?.name || "" + " - " + getTenantName()}</title>
             </Head>
 
             <section>

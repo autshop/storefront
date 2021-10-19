@@ -1,5 +1,3 @@
-export type VariantStatus = "active" | "disabled" | "active_on";
-
 export type VariantSize = {
     id: number;
     variantId: number;
@@ -20,5 +18,6 @@ export type Variant = {
     sku: number;
     images: VariantImage[];
     sizes: VariantSize[];
-    status: VariantStatus;
+    enabled: boolean;
+    price: number;
 };

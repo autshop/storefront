@@ -28,12 +28,22 @@ const useStyles = makeStyles(theme => ({
             width: "60%"
         }
     },
+    images: {},
     imageContainer: {
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        height: "50vh",
+        position: "relative",
+        overflow: "hidden",
+        width: "80%",
+        margin: "0 auto"
     },
     image: {
-        width: "80%"
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "auto"
     },
     details: {
         position: "relative"
@@ -81,6 +91,28 @@ const useStyles = makeStyles(theme => ({
     },
     disabledSize: {
         color: "lightgray"
+    },
+    imageList: {
+        display: "grid",
+        gridGap: "16px",
+        gridAutoRows: "120px",
+        gridTemplateColumns: "repeat(4, 1fr)",
+        width: "80%",
+        margin: "32px auto 0 auto"
+    },
+    imageListItem: {
+        width: "80%",
+        height: "100%",
+        position: "relative",
+        overflow: "hidden",
+        cursor: "pointer"
+    },
+    imageListItemImage: {
+        width: "100%",
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)"
     }
 }));
 
@@ -93,6 +125,7 @@ const VariantDetails: FC<Props> = ({ variantId, preLoadedVariantProps }) => {
     const classes = useStyles();
 
     const [selectedSizeId, setSelectedSizeId] = useState<number>(null);
+    const [selectedImageId, setSelectedImageId] = useState<number>(null);
 
     const variant = useSelector((state: StoreState) => getVariantById(state, variantId));
 
@@ -105,17 +138,38 @@ const VariantDetails: FC<Props> = ({ variantId, preLoadedVariantProps }) => {
         if (firstAvailableSize && firstAvailableSize.id) setSelectedSizeId(firstAvailableSize.id);
     }, [variantId]);
 
+    useEffect(() => {
+        setSelectedImageId(get(variant, "images[0].id", null));
+    }, [variantId, variant?.images]);
+
     const handleAddToBagClick = () => dispatch(addSizeAction(selectedSizeId));
 
     const handleSizeChange = sizeId => setSelectedSizeId(sizeId);
 
-    if (!variant) return null;
+    if (!variant) {
+        return null;
+    }
 
+    const selectedImage = find(variant.images, ({ id }) => id === selectedImageId);
+
+    //TODO COMPONENTS
     return (
         <div className={classes.root}>
             <div className={classes.container}>
-                <div className={classes.imageContainer}>
-                    <img className={classes.image} src={get(variant, "images[0].src", "")} alt="Variant Image." />
+                <div className={classes.images}>
+                    <div className={classes.imageContainer}>
+                        {selectedImage && (
+                            <img className={classes.image} src={selectedImage.src} alt="Variant Image." />
+                        )}
+                    </div>
+
+                    <div className={classes.imageList}>
+                        {map(variant.images || [], ({ id, src }) => (
+                            <div key={id} className={classes.imageListItem} onClick={() => setSelectedImageId(id)}>
+                                <img className={classes.imageListItemImage} src={src} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
                 <div className={classes.details}>
                     <Typography gutterBottom variant="h5" component="h2" className={classes.variantName}>
@@ -124,6 +178,10 @@ const VariantDetails: FC<Props> = ({ variantId, preLoadedVariantProps }) => {
 
                     <Typography variant="body2" component="p" className={classes.variantDescription}>
                         {preLoadedVariantProps.description}
+                    </Typography>
+                    <br />
+                    <Typography variant="body1" component="p" className={classes.variantDescription}>
+                        <b>{preLoadedVariantProps.price} EUR</b>
                     </Typography>
 
                     <div className={classes.actions}>

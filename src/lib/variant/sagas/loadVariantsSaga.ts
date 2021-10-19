@@ -1,5 +1,5 @@
 import { put, retry } from "@redux-saga/core/effects";
-import { get } from "lodash";
+import { get, filter } from "lodash";
 //
 import { loadVariantsSuccessAction, loadVariantsErrorAction } from "~lib/variant/actions";
 import serverApi from "~api/index";
@@ -12,7 +12,9 @@ function* loadVariantsSaga() {
             data: { data: variants }
         }: CustomAxiosResponse<Variant[]> = yield retry(2, 1500, serverApi.get, "/variant");
 
-        yield put(loadVariantsSuccessAction(variants));
+        const enabledVariants = filter(variants, ({ enabled }) => !!enabled);
+
+        yield put(loadVariantsSuccessAction(enabledVariants));
     } catch (e) {
         console.log(e);
         const error = get(e, "data.message", "Failed to load collections!");

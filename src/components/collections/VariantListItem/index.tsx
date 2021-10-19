@@ -91,6 +91,10 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
                     <Typography variant="body2" color="textSecondary" component="p">
                         {variant.description}
                     </Typography>
+                    <br />
+                    <Typography variant="body2" component="p">
+                        <b>{variant.price} EUR</b>
+                    </Typography>
                 </CardContent>
             </Link>
 
