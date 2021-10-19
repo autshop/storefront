@@ -35,9 +35,6 @@
       "~assets/*": [
         "src/assets/*"
       ],
-      "~mock/*": [
-        "src/mock/*"
-      ],
       "~utils/*": [
         "src/utils/*"
       ]

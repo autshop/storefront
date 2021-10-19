@@ -1,6 +1,6 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import { FC, memo, useEffect, useState } from "react";
-import { noop, map, sortBy, find } from "lodash";
+import { noop, map, sortBy, find, get } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 //
@@ -115,7 +115,7 @@ const VariantDetails: FC<Props> = ({ variantId, preLoadedVariantProps }) => {
         <div className={classes.root}>
             <div className={classes.container}>
                 <div className={classes.imageContainer}>
-                    <img className={classes.image} src={variant.imageSrc} alt="Variant Image." />
+                    <img className={classes.image} src={get(variant, "images[0].src", "")} alt="Variant Image." />
                 </div>
                 <div className={classes.details}>
                     <Typography gutterBottom variant="h5" component="h2" className={classes.variantName}>

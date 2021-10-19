@@ -78,7 +78,7 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
                     className={classes.image}
                     component="img"
                     alt="Contemplative Reptile"
-                    image={variant.imageSrc}
+                    image={get(variant, "images[0].src", "")}
                     title="Contemplative Reptile"
                 />
             </Link>
