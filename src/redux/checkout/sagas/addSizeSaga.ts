@@ -7,6 +7,7 @@ import serverApi from "~api/index";
 import { getOrderId, getOrderItems } from "~redux/checkout/selectors";
 import { CustomAxiosResponse } from "~utils/api/types";
 import { showCartAction } from "~redux/ui/actions";
+import { loadVariantsAction } from "~redux/variant/actions";
 
 function* addSizeSaga({ payload: { sizeId } }: ReturnType<typeof addSizeAction>) {
     try {
@@ -25,6 +26,7 @@ function* addSizeSaga({ payload: { sizeId } }: ReturnType<typeof addSizeAction>)
 
         yield put(addSizeSuccessAction(order));
         yield put(showCartAction());
+        yield put(loadVariantsAction());
     } catch (e) {
         console.log(e);
         const error = get(e, "data.message", "Failed to set order address!");
