@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import { map } from "lodash";
 //
 import MenuIcon from "@material-ui/icons/Menu";
-import { getIsMobileWindow } from "~lib/ui/selectors";
-import { getCollections } from "~lib/collections/selectors";
+import { getIsMobileWindow } from "~redux/ui/selectors";
+import { getCollections } from "~redux/collections/selectors";
+import { createGetStorefrontPropertyValueByKey } from "~redux/storefrontProperty/selectors";
 
 const useStyles = makeStyles({
     root: {
@@ -36,6 +37,7 @@ const MobileHeaderContent: FC = () => {
 
     const isMobileWindow = useSelector(getIsMobileWindow);
     const collections = useSelector(getCollections);
+    const propertySiteNavBarHeader = useSelector(createGetStorefrontPropertyValueByKey("site.nav-bar.header"));
 
     const handleMobileMenuClick = event => {
         setAnchorEl(event.currentTarget);
@@ -66,7 +68,7 @@ const MobileHeaderContent: FC = () => {
                 ))}
             </Menu>
             <Link href="/" passHref>
-                <Typography className={classes.homeLink}>Example Store Logo</Typography>
+                <Typography className={classes.homeLink}>{propertySiteNavBarHeader}</Typography>
             </Link>
         </div>
     );

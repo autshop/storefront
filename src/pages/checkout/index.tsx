@@ -8,10 +8,10 @@ import ContactStep from "~components/checkout/steps/ContactStep";
 import CartContent from "~components/cart/CartContent";
 import AddressStep from "~components/checkout/steps/AddressStep";
 import ShippingStep from "~components/checkout/steps/ShippingStep";
-import { showCartAction } from "~lib/ui/actions";
+import { showCartAction } from "~redux/ui/actions";
 import CheckoutStepWrapper from "~components/checkout/CheckoutStepWrapper";
-import { CheckoutStepKey } from "~lib/checkout/types";
-import { getOrder, getOrderItems } from "~lib/checkout/selectors";
+import { CheckoutStepKey } from "~redux/checkout/types";
+import { getOrder, getOrderItems } from "~redux/checkout/selectors";
 import FinalizeStep from "~components/checkout/steps/FinalizeStep";
 
 const useStyles = makeStyles(theme => ({

@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { map } from "lodash";
 //
-import { getOrderItems } from "~lib/checkout/selectors";
+import { getOrderItems } from "~redux/checkout/selectors";
 import CartItem from "~components/cart/CartContent/components/CartItem";
 
 const useStyles = makeStyles({

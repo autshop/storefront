@@ -23,8 +23,8 @@
       "node_modules/@types"
     ],
     "paths": {
-      "~lib/*": [
-        "src/lib/*"
+      "~redux/*": [
+        "src/redux/*"
       ],
       "~components/*": [
         "src/components/*"
@@ -37,6 +37,9 @@
       ],
       "~utils/*": [
         "src/utils/*"
+      ],
+      "~lib/*": [
+        "src/lib/*"
       ]
     },
     "resolveJsonModule": true

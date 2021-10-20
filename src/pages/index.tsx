@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Head from "next/head";
 import { Button, Card, CardContent, makeStyles, Typography } from "@material-ui/core";
 //
-import { getCollections } from "~lib/collections/selectors";
+import { getCollections } from "~redux/collections/selectors";
 import { getTenantName } from "~utils/helpers";
 
 const useStyles = makeStyles({

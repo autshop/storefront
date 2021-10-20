@@ -4,10 +4,10 @@ import { makeStyles, Paper } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { keys } from "lodash";
 //
-import { getIsCartShown } from "~lib/ui/selectors";
+import { getIsCartShown } from "~redux/ui/selectors";
 import Button from "~components/common/Button";
 import CartContent from "~components/cart/CartContent";
-import { getOrderItems } from "~lib/checkout/selectors";
+import { getOrderItems } from "~redux/checkout/selectors";
 
 const useStyles = makeStyles(theme => ({
     root: {

@@ -3,11 +3,11 @@ import { Button, TextField } from "@material-ui/core";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 //
-import { setCheckoutContactAction } from "~lib/checkout/actions";
-import { getCheckoutStepErrors, getOrderCustomerEmail } from "~lib/checkout/selectors";
+import { setCheckoutContactAction } from "~redux/checkout/actions";
+import { getCheckoutStepErrors, getOrderCustomerEmail } from "~redux/checkout/selectors";
 import { CheckoutContactStepFieldNames, CheckoutContactStepTypes } from "~utils/forms/types/checkout/contactStep";
-import { StoreState } from "~lib/state";
-import { CheckoutStepKey } from "~lib/checkout/types";
+import { StoreState } from "~redux/state";
+import { CheckoutStepKey } from "~redux/checkout/types";
 
 type Props = {
     classes: any;

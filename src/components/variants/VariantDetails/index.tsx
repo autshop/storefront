@@ -4,11 +4,11 @@ import { noop, map, sortBy, find, get } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames";
 //
-import { getVariantById } from "~lib/variant/selectors";
-import { StoreState } from "~lib/state";
+import { getVariantById } from "~redux/variant/selectors";
+import { StoreState } from "~redux/state";
 import Button from "~components/common/Button";
-import { addSizeAction } from "~lib/checkout/actions";
-import { Variant } from "~lib/variant/types";
+import { addSizeAction } from "~redux/checkout/actions";
+import { Variant } from "~redux/variant/types";
 
 const useStyles = makeStyles(theme => ({
     root: {

@@ -3,7 +3,7 @@ import { Card, CardContent, makeStyles, Typography } from "@material-ui/core";
 //
 import serverApi from "~api/index";
 import { useRouter } from "next/router";
-import { Order } from "~lib/checkout/types";
+import { Order } from "~redux/checkout/types";
 import Head from "next/head";
 import { getTenantName } from "~utils/helpers";
 

@@ -3,10 +3,10 @@ import { AppBar, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { keys } from "lodash";
 //
-import { showCartAction } from "~lib/ui/actions";
-import { getIsCartShown } from "~lib/ui/selectors";
+import { showCartAction } from "~redux/ui/actions";
+import { getIsCartShown } from "~redux/ui/selectors";
 import Cart from "~components/cart/Cart";
-import { getOrderItems } from "~lib/checkout/selectors";
+import { getOrderItems } from "~redux/checkout/selectors";
 import MobileHeaderContent from "~components/layout/Header/components/MobileHeaderContent";
 import DesktopHeaderContent from "~components/layout/Header/components/DesktopHeaderContent";
 

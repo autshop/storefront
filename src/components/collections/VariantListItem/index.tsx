@@ -14,10 +14,10 @@ import { map, get, find } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 //
-import { addSizeAction } from "~lib/checkout/actions";
+import { addSizeAction } from "~redux/checkout/actions";
 import Button from "~components/common/Button";
-import { getVariantById } from "~lib/variant/selectors";
-import { StoreState } from "~lib/state";
+import { getVariantById } from "~redux/variant/selectors";
+import { StoreState } from "~redux/state";
 
 type Props = {
     variantId: number;

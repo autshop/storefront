@@ -3,8 +3,8 @@ import { FC, useEffect, useState } from "react";
 import { map } from "lodash";
 import ShippingStepChoice from "~components/checkout/steps/ShippingStep/ShippingStepChoice";
 import { useDispatch, useSelector } from "react-redux";
-import { loadShippingMethodsAction, setCheckoutShippingMethodAction } from "~lib/checkout/actions";
-import { getOrderShippingMethodId, getShippingMethods } from "~lib/checkout/selectors";
+import { loadShippingMethodsAction, setCheckoutShippingMethodAction } from "~redux/checkout/actions";
+import { getOrderShippingMethodId, getShippingMethods } from "~redux/checkout/selectors";
 
 type Props = {
     classes: any;

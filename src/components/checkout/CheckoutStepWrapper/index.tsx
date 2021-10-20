@@ -3,9 +3,9 @@ import { CircularProgress, makeStyles } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 import { useSelector } from "react-redux";
 //
-import { CheckoutStepKey } from "~lib/checkout/types";
-import { getCheckoutStep, getCheckoutStepIsCurrent, getCheckoutStepIsDone } from "~lib/checkout/selectors";
-import { StoreState } from "~lib/state";
+import { CheckoutStepKey } from "~redux/checkout/types";
+import { getCheckoutStep, getCheckoutStepIsCurrent, getCheckoutStepIsDone } from "~redux/checkout/selectors";
+import { StoreState } from "~redux/state";
 import Separator from "~components/common/Separator";
 
 const useStyles = makeStyles(theme => ({

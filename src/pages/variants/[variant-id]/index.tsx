@@ -3,7 +3,7 @@ import Head from "next/head";
 //
 import VariantDetails from "~components/variants/VariantDetails";
 import serverApi from "~api/index";
-import { Variant } from "~lib/variant/types";
+import { Variant } from "~redux/variant/types";
 import { getTenantName } from "~utils/helpers";
 
 type Props = {

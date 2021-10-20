@@ -4,8 +4,8 @@ import { makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 //
 import VariantList from "~components/collections/VariantList";
-import { getCollectionById } from "~lib/collections/selectors";
-import { StoreState } from "~lib/state";
+import { getCollectionById } from "~redux/collections/selectors";
+import { StoreState } from "~redux/state";
 import serverApi from "~api/index";
 import Head from "next/head";
 import { getTenantName } from "~utils/helpers";

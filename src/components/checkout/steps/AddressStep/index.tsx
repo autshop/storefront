@@ -5,11 +5,11 @@ import { get } from "lodash";
 //
 import ButtonContainer from "~components/common/ButtonContainer";
 import { useDispatch, useSelector } from "react-redux";
-import { setCheckoutAddressAction } from "~lib/checkout/actions";
+import { setCheckoutAddressAction } from "~redux/checkout/actions";
 import { CheckoutAddressStepFieldNames, CheckoutAddressStepTypes } from "~utils/forms/types/checkout/addressStep";
-import { StoreState } from "~lib/state";
-import { getCheckoutStepErrors, getOrderAddress } from "~lib/checkout/selectors";
-import { CheckoutStepKey } from "~lib/checkout/types";
+import { StoreState } from "~redux/state";
+import { getCheckoutStepErrors, getOrderAddress } from "~redux/checkout/selectors";
+import { CheckoutStepKey } from "~redux/checkout/types";
 
 type Props = {
     classes: any;

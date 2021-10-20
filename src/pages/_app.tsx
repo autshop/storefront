@@ -1,14 +1,15 @@
-import { Provider, useDispatch } from "react-redux";
-import store from "~lib/store";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { ReactElement, useEffect } from "react";
 import Head from "next/head";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
+import { createMuiTheme, CssBaseline, MuiThemeProvider } from "@material-ui/core";
 //
+import store from "~redux/store";
 import Header from "~components/layout/Header";
 import "~assets/styles/global.scss";
 import LoadingScreen from "~components/common/LoadingScreen";
-import { initializeAppAction } from "~lib/app/actions";
+import { initializeAppAction } from "~redux/app/actions";
 import { getTenantName } from "~utils/helpers";
+import { createGetStorefrontPropertyValueByKey } from "~redux/storefrontProperty/selectors";
 
 export const MyApp = ({ Component, pageProps }): ReactElement => {
     const dispatch = useDispatch();
@@ -27,7 +28,8 @@ export const MyApp = ({ Component, pageProps }): ReactElement => {
     );
 };
 
-const WrappedApp = (props): ReactElement => {
+const MuiWrappedApp = (props): ReactElement => {
+    const propertySiteBackgroundColor = useSelector(createGetStorefrontPropertyValueByKey("site.background.color"));
     const theme = createMuiTheme({
         breakpoints: {
             values: {
@@ -37,15 +39,32 @@ const WrappedApp = (props): ReactElement => {
                 lg: 1280,
                 xl: 1920
             }
+        },
+        overrides: {
+            MuiCssBaseline: {
+                "@global": {
+                    body: {
+                        backgroundColor: propertySiteBackgroundColor || "lightgray",
+                        color: "green"
+                    }
+                }
+            }
         }
     });
 
     return (
         <MuiThemeProvider theme={theme}>
-            <Provider store={store}>
-                <MyApp {...props} />
-            </Provider>
+            <CssBaseline />
+            <MyApp {...props} />
         </MuiThemeProvider>
+    );
+};
+
+const WrappedApp = (props): ReactElement => {
+    return (
+        <Provider store={store}>
+            <MuiWrappedApp {...props} />
+        </Provider>
     );
 };
 

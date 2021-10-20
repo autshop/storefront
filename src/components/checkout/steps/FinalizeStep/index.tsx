@@ -2,10 +2,10 @@ import { FC, memo } from "react";
 import { Button } from "@material-ui/core";
 //
 import { useDispatch, useSelector } from "react-redux";
-import { finalizeOrderAction } from "~lib/checkout/actions";
-import { getCheckoutStepErrors } from "~lib/checkout/selectors";
-import { StoreState } from "~lib/state";
-import { CheckoutStepKey } from "~lib/checkout/types";
+import { finalizeOrderAction } from "~redux/checkout/actions";
+import { getCheckoutStepErrors } from "~redux/checkout/selectors";
+import { StoreState } from "~redux/state";
+import { CheckoutStepKey } from "~redux/checkout/types";
 
 type Props = {
     classes: any;

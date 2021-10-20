@@ -1,7 +1,7 @@
 import { CircularProgress, makeStyles, Typography } from "@material-ui/core";
 import { FC } from "react";
 import { useSelector } from "react-redux";
-import { getIsLoadingScreenShown, getLoadingScreenText } from "~lib/ui/selectors";
+import { getIsLoadingScreenShown, getLoadingScreenText } from "~redux/ui/selectors";
 
 const useStyles = makeStyles(() => ({
     root: {

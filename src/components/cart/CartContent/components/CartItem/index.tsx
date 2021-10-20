@@ -3,9 +3,9 @@ import { get } from "lodash";
 import { Card, CardContent, CardMedia, makeStyles, Typography } from "@material-ui/core";
 import { useSelector } from "react-redux";
 //
-import { StoreState } from "~lib/state";
-import { getOrderItemById } from "~lib/checkout/selectors";
-import { getVariantById } from "~lib/variant/selectors";
+import { StoreState } from "~redux/state";
+import { getOrderItemById } from "~redux/checkout/selectors";
+import { getVariantById } from "~redux/variant/selectors";
 
 const useStyles = makeStyles(() => ({
     root: {
