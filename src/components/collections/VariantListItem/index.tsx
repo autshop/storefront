@@ -10,7 +10,7 @@ import {
     Select,
     Typography
 } from "@material-ui/core";
-import { map, get, find } from "lodash";
+import { map, get, find, sortBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 //
@@ -106,7 +106,7 @@ const VariantListItem: FC<Props> = ({ variantId }) => {
                         value={selectedSizeId}
                         onChange={handleSizeChange}
                     >
-                        {map(variant.sizes, ({ measurement, id, quantity }) => (
+                        {map(sortBy(variant.sizes, "position"), ({ measurement, id, quantity }) => (
                             <MenuItem value={id} disabled={quantity <= 0}>
                                 {measurement}
                             </MenuItem>

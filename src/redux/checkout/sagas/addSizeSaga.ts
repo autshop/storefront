@@ -1,10 +1,10 @@
 import { put, retry, select } from "@redux-saga/core/effects";
-import { get, find } from "lodash";
+import { get } from "lodash";
 //
 import { addSizeAction, addSizeActionErrorAction, addSizeSuccessAction } from "~redux/checkout/actions";
 import { Order } from "~redux/checkout/types";
 import serverApi from "~api/index";
-import { getOrderId, getOrderItems } from "~redux/checkout/selectors";
+import { getOrderId } from "~redux/checkout/selectors";
 import { CustomAxiosResponse } from "~utils/api/types";
 import { showCartAction } from "~redux/ui/actions";
 import { loadVariantsAction } from "~redux/variant/actions";
@@ -12,16 +12,11 @@ import { loadVariantsAction } from "~redux/variant/actions";
 function* addSizeSaga({ payload: { sizeId } }: ReturnType<typeof addSizeAction>) {
     try {
         const orderId = yield select(getOrderId);
-        const orderItems = yield select(getOrderItems);
-
-        const orderItem = find(orderItems, ({ size: { id } }) => id === sizeId);
-
-        const sizeQuantity = !!orderItem ? orderItem.quantity + 1 : 1;
 
         const {
             data: { data: order }
         }: CustomAxiosResponse<Order> = yield retry(2, 1500, serverApi.put, `/order/${orderId}/sizes`, {
-            sizes: [{ quantity: sizeQuantity, sizeId }]
+            sizes: [{ quantity: 1, sizeId }]
         });
 
         yield put(addSizeSuccessAction(order));

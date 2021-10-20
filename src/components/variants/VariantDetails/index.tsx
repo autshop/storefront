@@ -12,7 +12,6 @@ import { Variant } from "~redux/variant/types";
 
 const useStyles = makeStyles(theme => ({
     root: {
-        background: "white",
         minHeight: "calc(100vh - 50px)",
         width: "100%"
     },

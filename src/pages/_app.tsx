@@ -44,8 +44,7 @@ const MuiWrappedApp = (props): ReactElement => {
             MuiCssBaseline: {
                 "@global": {
                     body: {
-                        backgroundColor: propertySiteBackgroundColor || "lightgray",
-                        color: "green"
+                        backgroundColor: propertySiteBackgroundColor || "lightgray"
                     }
                 }
             }
